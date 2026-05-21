@@ -8,6 +8,7 @@ import '../domain/repositories/counter_repository.dart';
 import '../domain/repositories/todo_repository.dart';
 import '../domain/usecases/get_todo.dart';
 import '../domain/usecases/increment_counter.dart';
+import '../modules/auth/controllers/welcome_controller.dart';
 
 class InitialBinding extends Bindings {
   @override
@@ -27,5 +28,6 @@ class InitialBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut(() => GetTodo(Get.find<TodoRepository>()), fenix: true);
+    Get.lazyPut<WelcomeController>(() => WelcomeController(), fenix: true);
   }
 }

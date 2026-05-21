@@ -9,6 +9,9 @@ class TodoPage extends StatefulWidget {
 
 class _TodoPageState extends State<TodoPage> {
   int counter = 0;
+  String result= "";
+  int a=3;
+  int b=5;
 
   @override
   void initState() {
@@ -28,12 +31,21 @@ class _TodoPageState extends State<TodoPage> {
     });
   }
 
+  void calulate(){
+    setState(() {
+      result = (a+b).toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text("Counter: $counter"),
         IconButton(onPressed: onIncreaseCounter, icon: Icon(Icons.add)),
+        Text("Result: $result"),
+        
+        IconButton(onPressed: calulate, icon: Icon(Icons.calculate)),
       ],
     );
   }
