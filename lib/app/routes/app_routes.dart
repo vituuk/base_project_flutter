@@ -29,4 +29,5 @@ class AppRoutes {
   static const birthdayPrivacy = '/birthday-privacy';
   static const invitesPrivacy = '/invites-privacy';
   static const disappearingMessages = '/disappearing-messages';
+  static const security             = '/security';
 }

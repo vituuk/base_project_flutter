@@ -39,7 +39,6 @@ const List<CountryItem> kCountries = [
   CountryItem(name: 'Singapore',             flag: '🇸🇬', dialCode: '+65'),
   CountryItem(name: 'South Korea',           flag: '🇰🇷', dialCode: '+82'),
   CountryItem(name: 'Spain',                 flag: '🇪🇸', dialCode: '+34'),
-  CountryItem(name: 'Thailand',              flag: '🇹🇭', dialCode: '+66'),
   CountryItem(name: 'United Arab Emirates',  flag: '🇦🇪', dialCode: '+971'),
   CountryItem(name: 'United Kingdom',        flag: '🇬🇧', dialCode: '+44'),
   CountryItem(name: 'United States',         flag: '🇺🇸', dialCode: '+1'),

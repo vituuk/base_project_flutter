@@ -52,6 +52,8 @@ import '../modules/setting/bindings/privacy/bio_privacy_binding.dart';
 import '../modules/setting/bindings/privacy/birthday_privacy_binding.dart';
 import '../modules/setting/bindings/privacy/invites_privacy_binding.dart';
 import '../modules/setting/bindings/privacy/disappearing_messages_binding.dart';
+import '../modules/setting/views/security/security_page.dart';
+import '../modules/setting/bindings/security/security_binding.dart';
 
 
 class AppPages {
@@ -187,6 +189,11 @@ class AppPages {
       name: AppRoutes.disappearingMessages,
       page: () => const DisappearingMessagesPage(),
       binding: DisappearingMessagesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.security,
+      page: () => const SecurityPage(),
+      binding: SecurityBinding(),
     ),
   ];
 }

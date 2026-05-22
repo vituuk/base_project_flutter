@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../core/constants/setting/setting_constants.dart';
 import '../../../core/theme/theme_extensions.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/chat_controller.dart';
@@ -86,11 +87,8 @@ class ChatPage extends GetView<ChatController> {
             onTap: () => Get.toNamed(AppRoutes.contact),
           ),
           const SizedBox(width: 4),
-          // More options
-          _AppBarIconButton(
-            svgPath: 'lib/assets/img/dot.svg',
-            onTap: () {},
-          ),
+          // More options popup
+          _buildDotMenu(context),
         ],
       ),
     );
@@ -220,7 +218,183 @@ class ChatPage extends GetView<ChatController> {
       ),
     );
   }
+
+  // ── Dot menu popup ──────────────────────────────────────────────────────────
+  Widget _buildDotMenu(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF111827);
+    final subtitleColor =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+    final dividerColor =
+        isDark ? const Color(0xFF334155) : const Color(0xFFE8ECF5);
+    const Color primary = Color(0xFF2046E8);
+
+    return PopupMenuButton<String>(
+      offset: const Offset(0, 44),
+      color: cardColor,
+      elevation: 8,
+      shadowColor: Colors.black.withOpacity(0.12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      // ── Trigger button (same style as _AppBarIconButton) ─────────────────
+      child: Container(
+        width: 38,
+        height: 38,
+        decoration: BoxDecoration(
+          color: AppColors.card,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.07),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Center(
+          child: SvgPicture.asset(
+            'lib/assets/img/dot.svg',
+            width: 20,
+            height: 20,
+            colorFilter:
+                ColorFilter.mode(AppColors.text, BlendMode.srcIn),
+          ),
+        ),
+      ),
+      onSelected: (value) {
+        switch (value) {
+          case 'day_mode':
+            Get.changeThemeMode(ThemeMode.light);
+            break;
+          case 'night_mode':
+            Get.changeThemeMode(ThemeMode.dark);
+            break;
+          case 'new_group':
+            Get.toNamed(AppRoutes.contact);
+            break;
+          case 'settings':
+            Get.offAllNamed(AppRoutes.setting);
+            break;
+        }
+      },
+      itemBuilder: (_) => [
+        // ── Section label ────────────────────────────────────────────────
+        PopupMenuItem<String>(
+          enabled: false,
+          height: 30,
+          child: Text(
+            'THEME',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.8,
+              color: subtitleColor,
+            ),
+          ),
+        ),
+        // Day Mode
+        PopupMenuItem<String>(
+          value: 'day_mode',
+          height: 44,
+          child: Row(
+            children: [
+              Icon(
+                Icons.wb_sunny_outlined,
+                size: 18,
+                color: isDark ? subtitleColor : primary,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                SettingConstants.themeModes[0],
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: isDark ? FontWeight.w400 : FontWeight.w600,
+                  color: isDark ? textColor : primary,
+                ),
+              ),
+              if (!isDark) ...[
+                const Spacer(),
+                Icon(Icons.check_rounded, size: 16, color: primary),
+              ],
+            ],
+          ),
+        ),
+        // Night Mode
+        PopupMenuItem<String>(
+          value: 'night_mode',
+          height: 44,
+          child: Row(
+            children: [
+              Icon(
+                Icons.nights_stay_outlined,
+                size: 18,
+                color: isDark ? primary : subtitleColor,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                SettingConstants.themeModes[1],
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: isDark ? FontWeight.w600 : FontWeight.w400,
+                  color: isDark ? primary : textColor,
+                ),
+              ),
+              if (isDark) ...[
+                const Spacer(),
+                Icon(Icons.check_rounded, size: 16, color: primary),
+              ],
+            ],
+          ),
+        ),
+
+        // ── Divider ──────────────────────────────────────────────────────
+        PopupMenuItem<String>(
+          enabled: false,
+          height: 1,
+          padding: EdgeInsets.zero,
+          child: Divider(height: 1, thickness: 0.5, color: dividerColor),
+        ),
+
+        // ── Actions ──────────────────────────────────────────────────────
+        PopupMenuItem<String>(
+          value: 'new_group',
+          height: 44,
+          child: Row(
+            children: [
+              Icon(Icons.group_add_outlined, size: 18, color: subtitleColor),
+              const SizedBox(width: 12),
+              Text(
+                'New Group',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: textColor),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem<String>(
+          value: 'settings',
+          height: 44,
+          child: Row(
+            children: [
+              Icon(Icons.settings_outlined, size: 18, color: subtitleColor),
+              const SizedBox(width: 12),
+              Text(
+                'Settings',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: textColor),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
+
 
 // ── AppBar Icon Button ────────────────────────────────────────────────────────────
 class _AppBarIconButton extends StatelessWidget {

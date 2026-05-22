@@ -88,7 +88,7 @@ class _SettingPageState extends State<SettingPage> {
                   title: SettingConstants.itemSecurity,
                   textColor: textColor,
                   iconColor: listIconColor,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.security),
                 ),
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(
