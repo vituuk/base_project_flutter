@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/auth/auth_constants.dart';
+import '../../../core/theme/app_theme.dart';
 import '../controllers/set_up_profile_controller.dart';
 
 class SetUpProfilePage extends StatefulWidget {
@@ -124,6 +125,7 @@ class _SetUpProfilePageState extends State<SetUpProfilePage> {
                           child: Text(
                             AuthConstants.setupProfileSubtitle,
                             style: TextStyle(
+                              fontFamily: AppTheme.fontFamilyNunito,
                               fontSize: 13,
                               color: subtitleColor,
                               fontWeight: FontWeight.w400,
