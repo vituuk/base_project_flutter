@@ -2,6 +2,7 @@ class AppRoutes {
   const AppRoutes._();
 
   static const home = '/home';
+  static const shell = '/shell';
   static const detail = '/detail';
   static const user = '/user';
   static const welcome = '/welcome';
@@ -30,4 +31,6 @@ class AppRoutes {
   static const invitesPrivacy = '/invites-privacy';
   static const disappearingMessages = '/disappearing-messages';
   static const security             = '/security';
+  static const locationMap          = '/location-map';
+  static const locationPicker       = '/location-picker';
 }

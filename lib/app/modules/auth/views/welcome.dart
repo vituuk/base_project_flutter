@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/auth/auth_constants.dart';
-import '../controllers/welcome_controller.dart';
+import '../controllers/auth_controller.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});

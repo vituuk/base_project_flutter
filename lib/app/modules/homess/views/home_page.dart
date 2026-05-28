@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import '../../../routes/app_routes.dart';
-import '../../home/views/menu_bar.dart';
+import '../../home/widgets/menu_bar.dart';
 import 'list_menu.dart';
 // import 'user_pages.dart';
 

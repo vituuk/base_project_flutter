@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../core/theme/theme_controller.dart';
 import '../../../core/theme/theme_extensions.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/contact_controller.dart';
@@ -18,20 +19,21 @@ class ContactPage extends GetView<ContactController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: _bg,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildAppBar(),
-            _buildSearchBar(),
-            _buildSortedLabel(),
-            Expanded(child: _buildContactList()),
-          ],
+    return GetBuilder<ThemeController>(
+      builder: (_) => Scaffold(
+        backgroundColor: _bg,
+        body: SafeArea(
+          child: Column(
+            children: [
+              _buildAppBar(),
+              _buildSearchBar(),
+              _buildSortedLabel(),
+              Expanded(child: _buildContactList()),
+            ],
+          ),
         ),
+        floatingActionButton: _buildFab(),
       ),
-      floatingActionButton: _buildFab(),
-      bottomNavigationBar: _buildBottomNav(),
     );
   }
 
@@ -72,8 +74,8 @@ class ContactPage extends GetView<ContactController> {
               child: Center(
                 child: Obx(() => SvgPicture.asset(
                       controller.sortByLastSeen.value
-                          ? 'lib/assets/img/contact/list-last-time.svg'
-                          : 'lib/assets/img/contact/list-name.svg',
+                          ? 'assets/icons/contact/list-last-time.svg'
+                          : 'assets/icons/contact/list-name.svg',
                       width: 22,
                       height: 22,
                     )),
@@ -199,7 +201,7 @@ class ContactPage extends GetView<ContactController> {
       backgroundColor: _primary,
       shape: const CircleBorder(),
       child: SvgPicture.asset(
-        'lib/assets/img/add-contact.svg',
+        'assets/icons/add-contact.svg',
         width: 24,
         height: 24,
         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
@@ -228,25 +230,25 @@ class ContactPage extends GetView<ContactController> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _NavItem(
-                svgPath: 'lib/assets/img/menu-bar/chat.svg',
+                svgPath: 'assets/icons/menu-bar/chat.svg',
                 label: 'Chats',
                 isActive: false,
                 onTap: () => Get.back(),
               ),
               _NavItem(
-                svgPath: 'lib/assets/img/menu-bar/contact.svg',
+                svgPath: 'assets/icons/menu-bar/contact.svg',
                 label: 'Contacts',
                 isActive: true,
                 onTap: () {},
               ),
               _NavItem(
-                svgPath: 'lib/assets/img/menu-bar/setting.svg',
+                svgPath: 'assets/icons/menu-bar/setting.svg',
                 label: 'Setting',
                 isActive: false,
                 onTap: () => Get.offAllNamed(AppRoutes.setting),
               ),
               _NavItem(
-                svgPath: 'lib/assets/img/menu-bar/profile.svg',
+                svgPath: 'assets/icons/menu-bar/profile.svg',
                 label: 'Profile',
                 isActive: false,
                 onTap: () => Get.toNamed(
@@ -357,7 +359,7 @@ class _ContactCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border:
-                              Border.all(color: const Color(0xFFE8ECF5), width: 1.5),
+                              Border.all(color: AppColors.divider, width: 1.0),
                         ),
                         child: ClipOval(child: _buildAvatar()),
                       ),
@@ -416,7 +418,7 @@ class _ContactCard extends StatelessWidget {
 
           // ── Action buttons — SVGs from /img/contact/ ────────────────────────
           _SvgActionButton(
-            svgPath: 'lib/assets/img/contact/chat.svg',
+            svgPath: 'assets/icons/contact/chat.svg',
             onTap: () => Get.toNamed(
               AppRoutes.chatDetail,
               arguments: {
@@ -428,7 +430,7 @@ class _ContactCard extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           _SvgActionButton(
-            svgPath: 'lib/assets/img/contact/call.svg',
+            svgPath: 'assets/icons/contact/call.svg',
             onTap: () => Get.toNamed(
               AppRoutes.userCall,
               arguments: {

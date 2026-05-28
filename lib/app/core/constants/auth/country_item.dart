@@ -1,23 +1,20 @@
-/// Data model for a single country entry in the phone-number picker.
+ 
 class CountryItem {
   const CountryItem({
     required this.name,
     required this.flag,
     required this.dialCode,
   });
-
-  /// Full country name, e.g. "Cambodia".
+  
   final String name;
 
-  /// Unicode flag emoji, e.g. "🇰🇭".
+  
   final String flag;
-
-  /// International dial code, e.g. "+855".
+ 
   final String dialCode;
 }
 
-/// Seed list of countries shown in the country picker bottom sheet.
-/// Sorted alphabetically by name.
+ 
 const List<CountryItem> kCountries = [
   CountryItem(name: 'Australia',             flag: '🇦🇺', dialCode: '+61'),
   CountryItem(name: 'Brazil',                flag: '🇧🇷', dialCode: '+55'),

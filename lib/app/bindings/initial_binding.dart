@@ -8,7 +8,7 @@ import '../domain/repositories/counter_repository.dart';
 import '../domain/repositories/todo_repository.dart';
 import '../domain/usecases/get_todo.dart';
 import '../domain/usecases/increment_counter.dart';
-import '../modules/auth/controllers/welcome_controller.dart';
+import '../modules/auth/controllers/auth_controller.dart';
 
 class InitialBinding extends Bindings {
   @override

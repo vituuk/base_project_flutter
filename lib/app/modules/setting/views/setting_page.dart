@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../core/theme/theme_controller.dart';
 import '../../../core/constants/setting/setting_constants.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/setting_controller.dart';
@@ -21,19 +22,23 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Dynamic Theme Colors
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDarkMode ? const Color(0xFF0F172A) : const Color(0xFFF2F5FC);
-    final cardColor = isDarkMode ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDarkMode ? Colors.white : const Color(0xFF111827);
-    final subtitleColor = isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final dividerColor = isDarkMode ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
-    final listIconColor = isDarkMode ? Colors.white70 : const Color(0xFF1E293B);
+    return GetBuilder<ThemeController>(
+      builder: (_) {
+        // Dynamic Theme Colors
+        final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+        final bgColor = isDarkMode ? const Color(0xFF0F172A) : const Color(0xFFF2F5FC);
+        final cardColor = isDarkMode ? const Color(0xFF1E293B) : Colors.white;
+        final textColor = isDarkMode ? Colors.white : const Color(0xFF111827);
+        final subtitleColor = isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+        final dividerColor = isDarkMode ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+        final listIconColor = isDarkMode ? Colors.white70 : const Color(0xFF1E293B);
 
-    return Scaffold(
-      backgroundColor: bgColor,
+        return Scaffold(
+          backgroundColor: bgColor,
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -194,9 +199,11 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(cardColor),
     );
-  }
+  },
+);
+}
+
 
   Widget _buildUserHeader(Color textColor, Color subtitleColor) {
     return Column(
@@ -468,25 +475,25 @@ class _SettingPageState extends State<SettingPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _BottomNavItem(
-                svgPath: 'lib/assets/img/menu-bar/chat.svg',
+                svgPath: 'assets/icons/menu-bar/chat.svg',
                 label: 'Chats',
                 isActive: false,
                 onTap: () => Get.offAllNamed(AppRoutes.chat),
               ),
               _BottomNavItem(
-                svgPath: 'lib/assets/img/menu-bar/contact.svg',
+                svgPath: 'assets/icons/menu-bar/contact.svg',
                 label: 'Contacts',
                 isActive: false,
                 onTap: () => Get.offAllNamed(AppRoutes.contact),
               ),
               _BottomNavItem(
-                svgPath: 'lib/assets/img/menu-bar/setting.svg',
+                svgPath: 'assets/icons/menu-bar/setting.svg',
                 label: 'Setting',
                 isActive: true,
                 onTap: () {},
               ),
               _BottomNavItem(
-                svgPath: 'lib/assets/img/menu-bar/profile.svg',
+                svgPath: 'assets/icons/menu-bar/profile.svg',
                 label: 'Profile',
                 isActive: false,
                 onTap: () => Get.offAllNamed(AppRoutes.profile),

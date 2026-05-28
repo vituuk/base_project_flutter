@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 
+import '../../../core/constants/chats/chat_list_item.dart';
 import '../../../domain/entities/counter.dart';
 import '../../../domain/entities/todo.dart';
 import '../../../domain/usecases/get_todo.dart';
 import '../../../domain/usecases/increment_counter.dart';
+import '../../../routes/app_routes.dart';
+
+export '../../../core/constants/chats/chat_list_item.dart' show ChatListItem;
 
 class HomeController extends GetxController {
   HomeController({
@@ -50,4 +54,55 @@ class HomeController extends GetxController {
       _isLoadingTodo.value = false;
     }
   }
+}
+
+class ChatController extends GetxController {
+  final searchQuery = ''.obs;
+
+  final _messages = <ChatListItem>[...kChatListItems].obs;
+
+  List<ChatListItem> get filteredMessages {
+    if (searchQuery.value.isEmpty) return _messages;
+    return _messages
+        .where((m) =>
+            m.name.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
+            m.lastMessage
+                .toLowerCase()
+                .contains(searchQuery.value.toLowerCase()))
+        .toList();
+  }
+
+  void onSearchChanged(String value) {
+    searchQuery.value = value;
+  }
+}
+
+class ListMenuController extends GetxController {
+  final count = 0.obs;
+
+  void increaseCounter() {
+    count.value++;
+  }
+}
+
+class MenuBarController extends GetxController {
+  final activeRoute = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    activeRoute.value = Get.currentRoute;
+  }
+
+  void navigateTo(String route) {
+    activeRoute.value = route;
+    Get.toNamed(route);
+  }
+
+  final menuItems = <Map<String, dynamic>>[
+    {'label': 'Home', 'route': AppRoutes.home},
+    {'label': 'Detail', 'route': AppRoutes.detail},
+    {'label': 'User', 'route': AppRoutes.user},
+    {'label': 'Chat', 'route': AppRoutes.chat},
+  ];
 }

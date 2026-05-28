@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import '../../../routes/app_routes.dart';
-import 'menu_bar.dart';
-import 'list_menu.dart';
+import '../widgets/menu_bar.dart';
+import '../widgets/list_menu.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});

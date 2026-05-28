@@ -3,17 +3,17 @@ import 'package:get/get.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_page.dart';
 import 'app_routes.dart';
+import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/welcome.dart';
-import '../modules/auth/bindings/welcome_binding.dart';
-import '../modules/auth/views/login.dart';
-import '../modules/auth/bindings/login_binding.dart';
-import '../modules/auth/views/verification.dart';
-import '../modules/auth/bindings/verification_binding.dart';
-import '../modules/auth/views/set_up_profile.dart';
-import '../modules/auth/bindings/set_up_profile_binding.dart';
-import '../modules/home/views/chat_page.dart';
-import '../modules/home/bindings/chat_binding.dart';
+import '../modules/auth/widgets/login.dart';
+import '../modules/auth/widgets/verification.dart';
+import '../modules/auth/widgets/set_up_profile.dart';
+import '../modules/home/widgets/chat_page.dart';
+import '../modules/shell/views/shell_page.dart';
+import '../modules/shell/bindings/shell_binding.dart';
 import '../modules/chats/views/chat_detail_page.dart';
+import '../modules/chats/views/location_map_page.dart';
+import '../modules/chats/views/location_picker_page.dart';
 import '../modules/chats/bindings/chat_detail_binding.dart';
 import '../modules/contact/views/contact_page.dart';
 import '../modules/contact/bindings/contact_binding.dart';
@@ -21,45 +21,35 @@ import '../modules/user_call/views/user_call_page.dart';
 import '../modules/user_call/bindings/user_call_binding.dart';
 import '../modules/profile/views/profile_page.dart';
 import '../modules/profile/bindings/profile_binding.dart';
-import '../modules/profile/bindings/profile/edit_info_binding.dart';
-import '../modules/profile/bindings/profile/set_photo_binding.dart';
-import '../modules/profile/bindings/profile/edit_name_binding.dart';
-import '../modules/profile/bindings/profile/change_number_binding.dart';
-import '../modules/profile/bindings/profile/edit_username_binding.dart';
-import '../modules/profile/bindings/profile/edit_bio_binding.dart';
-import '../modules/profile/views/edit_info_page.dart';
-import '../modules/profile/views/set_photo_page.dart';
-import '../modules/profile/views/edit_name_page.dart';
-import '../modules/profile/views/change_number_page.dart';
-import '../modules/profile/views/edit_username_page.dart';
-import '../modules/profile/views/edit_bio_page.dart';
+import '../modules/profile/widgets/edit_info_page.dart';
+import '../modules/profile/widgets/set_photo_page.dart';
+import '../modules/profile/widgets/edit_name_page.dart';
+import '../modules/profile/widgets/change_number_page.dart';
+import '../modules/profile/widgets/edit_username_page.dart';
+import '../modules/profile/widgets/edit_bio_page.dart';
 import '../modules/setting/views/setting_page.dart';
-import '../modules/setting/views/theme_page.dart';
-import '../modules/setting/views/privacy/privacy_page.dart';
-import '../modules/setting/views/privacy/last_seen_page.dart';
-import '../modules/setting/views/privacy/profile_photos_page.dart';
-import '../modules/setting/views/privacy/phone_number_privacy_page.dart';
-import '../modules/setting/views/privacy/bio_privacy_page.dart';
-import '../modules/setting/views/privacy/birthday_privacy_page.dart';
-import '../modules/setting/views/privacy/invites_privacy_page.dart';
-import '../modules/setting/views/privacy/disappearing_messages_page.dart';
+import '../modules/setting/widgets/theme_page.dart';
+import '../modules/setting/widgets/privacy_page.dart';
+import '../modules/setting/widgets/last_seen_page.dart';
+import '../modules/setting/widgets/profile_photos_page.dart';
+import '../modules/setting/widgets/phone_number_privacy_page.dart';
+import '../modules/setting/widgets/bio_privacy_page.dart';
+import '../modules/setting/widgets/birthday_privacy_page.dart';
+import '../modules/setting/widgets/invites_privacy_page.dart';
+import '../modules/setting/widgets/disappearing_messages_page.dart';
 import '../modules/setting/bindings/setting_binding.dart';
-import '../modules/setting/bindings/privacy/privacy_binding.dart';
-import '../modules/setting/bindings/privacy/last_seen_binding.dart';
-import '../modules/setting/bindings/privacy/profile_photos_binding.dart';
-import '../modules/setting/bindings/privacy/phone_number_privacy_binding.dart';
-import '../modules/setting/bindings/privacy/bio_privacy_binding.dart';
-import '../modules/setting/bindings/privacy/birthday_privacy_binding.dart';
-import '../modules/setting/bindings/privacy/invites_privacy_binding.dart';
-import '../modules/setting/bindings/privacy/disappearing_messages_binding.dart';
-import '../modules/setting/views/security/security_page.dart';
-import '../modules/setting/bindings/security/security_binding.dart';
+import '../modules/setting/widgets/security_page.dart';
 
 
 class AppPages {
   const AppPages._();
 
   static final pages = <GetPage>[
+    GetPage(
+      name: AppRoutes.shell,
+      page: () => const ShellPage(),
+      binding: ShellBinding(),
+    ),
     GetPage(
       name: AppRoutes.home,
       page: () => const HomePage(),
@@ -194,6 +184,14 @@ class AppPages {
       name: AppRoutes.security,
       page: () => const SecurityPage(),
       binding: SecurityBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.locationMap,
+      page: () => const LocationMapPage(),
+    ),
+    GetPage(
+      name: AppRoutes.locationPicker,
+      page: () => const LocationPickerPage(),
     ),
   ];
 }

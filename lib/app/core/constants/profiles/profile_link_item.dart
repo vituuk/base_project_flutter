@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// Model and seed data for the Links tab on the profile page.
 class ProfileLinkItem {
   final String title;
@@ -23,8 +25,8 @@ class ProfileLinkThumbnail {
   /// Two-stop gradient colours (used when [solidColor] is null).
   final List<int>? gradientColors;
 
-  /// Icon codepoint from [Icons] (material icon).
-  final int iconCodePoint;
+  /// Icon from [Icons] (material icon).
+  final IconData iconData;
 
   /// Icon colour.
   final int iconColor;
@@ -32,7 +34,7 @@ class ProfileLinkThumbnail {
   const ProfileLinkThumbnail({
     this.solidColor,
     this.gradientColors,
-    required this.iconCodePoint,
+    required this.iconData,
     required this.iconColor,
   });
 }
@@ -44,7 +46,7 @@ const List<ProfileLinkItem> kProfileLinkItems = [
     date: 'Shared Oct 12, 2023',
     thumbnail: ProfileLinkThumbnail(
       solidColor: 0xFFF1F5F9,
-      iconCodePoint: 0xe22b, // Icons.edit_note_rounded
+      iconData: Icons.edit_note_rounded, // Icons.edit_note_rounded
       iconColor: 0xFFFFFFFF,
     ),
   ),
@@ -54,7 +56,7 @@ const List<ProfileLinkItem> kProfileLinkItems = [
     date: 'Shared Oct 10, 2023',
     thumbnail: ProfileLinkThumbnail(
       gradientColors: [0xFFEA4C89, 0xFFFF8AB3],
-      iconCodePoint: 0xe40a, // Icons.palette_outlined
+      iconData: Icons.palette_outlined, // Icons.palette_outlined
       iconColor: 0xFFFFFFFF,
     ),
   ),
@@ -64,7 +66,7 @@ const List<ProfileLinkItem> kProfileLinkItems = [
     date: 'Shared Oct 08, 2023',
     thumbnail: ProfileLinkThumbnail(
       solidColor: 0xFF2D8CFF,
-      iconCodePoint: 0xe63d, // Icons.videocam_rounded
+      iconData: Icons.videocam_rounded, // Icons.videocam_rounded
       iconColor: 0xFFFFFFFF,
     ),
   ),
@@ -74,7 +76,7 @@ const List<ProfileLinkItem> kProfileLinkItems = [
     date: 'Shared Oct 05, 2023',
     thumbnail: ProfileLinkThumbnail(
       solidColor: 0xFF0F172A,
-      iconCodePoint: 0xe3b1, // Icons.layers_outlined
+      iconData: Icons.layers_outlined, // Icons.layers_outlined
       iconColor: 0xFF38BDF8,
     ),
   ),

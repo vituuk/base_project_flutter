@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:camera/camera.dart';
 
 import '../controllers/user_call_controller.dart';
 
@@ -165,7 +166,7 @@ class UserCallPage extends GetView<UserCallController> {
       children: [
         // Back Button
         GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => controller.endCall(),
           child: Container(
             width: 42,
             height: 42,
@@ -235,11 +236,24 @@ class UserCallPage extends GetView<UserCallController> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: isVideo
-                  ? Image.network(
-                      _userSelfieImage,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => _buildAvatarPlaceholder(),
-                    )
+                  ? Obx(() {
+                      if (controller.isCameraInitialized.value &&
+                          controller.cameraController != null) {
+                        return FittedBox(
+                          fit: BoxFit.cover,
+                          child: SizedBox(
+                            width: 100,
+                            height: 100 * controller.cameraController!.value.aspectRatio,
+                            child: CameraPreview(controller.cameraController!),
+                          ),
+                        );
+                      }
+                      return Image.network(
+                        _userSelfieImage,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => _buildAvatarPlaceholder(),
+                      );
+                    })
                   : Center(
                       child: Container(
                         width: 60,
@@ -331,7 +345,7 @@ class UserCallPage extends GetView<UserCallController> {
 
           // ── End Call Button ────────────────────────────────────────────────
           _buildControlButton(
-            onTap: () => Get.back(),
+            onTap: () => controller.endCall(),
             icon: Icons.call_end_rounded,
             backgroundColor: _red,
             iconColor: Colors.white,
