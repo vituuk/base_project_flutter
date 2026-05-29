@@ -21,13 +21,20 @@ class ChatDetailController extends GetxController {
   // TextEditingController lives here so it survives widget rebuilds
   final inputController = TextEditingController();
   final isTyping = false.obs;
+  final isPeerTyping = false.obs;
+  final scrollController = ScrollController();
   final showEmojiPicker = false.obs;
   final showAttachmentOverlay = false.obs;
+  final hasRecordedVoice = false.obs;
+  final previewVoicePath = ''.obs;
+  final previewDuration = 0.obs;
+  final micDragY = 0.0.obs;
+  final isDraggingMic = false.obs;
   final ImagePicker _picker = ImagePicker();
   final selectedImagePaths = <String>[].obs;
 
-  // ── Messages (seeded from constants, then extended at runtime) ───────────────
   final messages = <ChatDetailMessage>[...kChatDetailMessages].obs;
+  final replyMessage = Rxn<ChatDetailMessage>();
 
   // ── Recording State ─────────────────────────────────────────────────────────
   final AudioRecorder recorder = AudioRecorder();
@@ -51,6 +58,7 @@ class ChatDetailController extends GetxController {
   @override
   void onClose() {
     inputController.dispose();
+    scrollController.dispose();
     _recordingTimer?.cancel();
     recorder.dispose();
     super.onClose();
@@ -64,6 +72,9 @@ class ChatDetailController extends GetxController {
     final text = inputController.text.trim();
     if (text.isEmpty && selectedImagePaths.isEmpty) return;
 
+    bool sentSomething = false;
+    String lastMsg = "";
+
     if (selectedImagePaths.isNotEmpty) {
       for (final path in selectedImagePaths) {
         messages.add(ChatDetailMessage(
@@ -76,21 +87,36 @@ class ChatDetailController extends GetxController {
         ));
       }
       selectedImagePaths.clear();
+      sentSomething = true;
+      lastMsg = "photo";
     }
 
     if (text.isNotEmpty) {
+      final replyVal = replyMessage.value;
       messages.add(ChatDetailMessage(
         text: text,
         isSent: true,
         time: _currentTime(),
         isRead: false,
+        repliedToText: replyVal?.text,
+        repliedToSender: replyVal == null
+            ? null
+            : (replyVal.isSent ? 'You' : userName.value),
       ));
       inputController.clear();
+      replyMessage.value = null;
+      sentSomething = true;
+      lastMsg = text;
     }
 
     isTyping.value = false;
     showEmojiPicker.value = false;
     showAttachmentOverlay.value = false;
+
+    if (sentSomething) {
+      scrollToBottom();
+      _simulatePeerReply(lastMsg);
+    }
   }
 
   void toggleEmojiPicker() {
@@ -197,6 +223,8 @@ class ChatDetailController extends GetxController {
           fileName: fileName,
           fileSize: '$fileSize MB',
         ));
+        scrollToBottom();
+        _simulatePeerReply(fileName);
       }
     } catch (e) {
       debugPrint("Error picking file: $e");
@@ -269,14 +297,9 @@ class ChatDetailController extends GetxController {
       isRecording.value = false;
 
       if (path != null) {
-        messages.add(ChatDetailMessage(
-          text: 'Voice Message',
-          isSent: true,
-          time: _currentTime(),
-          isVoice: true,
-          voicePath: path,
-          voiceDuration: recordingDuration.value,
-        ));
+        previewVoicePath.value = path;
+        previewDuration.value = recordingDuration.value;
+        hasRecordedVoice.value = true;
       }
     } catch (e) {
       print("Error stopping record: $e");
@@ -304,5 +327,149 @@ class ChatDetailController extends GetxController {
     final m = now.minute.toString().padLeft(2, '0');
     final period = now.hour >= 12 ? 'PM' : 'AM';
     return '$h:$m $period';
+  }
+
+  void scrollToBottom() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  void triggerPeerReply(String userMessage) {
+    _simulatePeerReply(userMessage);
+  }
+
+  void _simulatePeerReply(String userMessage) {
+    isPeerTyping.value = true;
+    scrollToBottom();
+
+    Timer(const Duration(milliseconds: 2000), () {
+      isPeerTyping.value = false;
+
+      String replyText = "I received your message! I'll check and get back to you soon.";
+      final cleanMsg = userMessage.toLowerCase().trim();
+
+      if (cleanMsg.contains('hello') || cleanMsg.contains('hi') || cleanMsg.contains('hey')) {
+        replyText = "Hello! Hope you're doing well. What's on your mind?";
+      } else if (cleanMsg.contains('meeting') || cleanMsg.contains('finalize')) {
+        replyText = "Yes, let's meet tomorrow morning to finalize the slide deck. How does 10 AM sound?";
+      } else if (cleanMsg.contains('conversion') || cleanMsg.contains('rate')) {
+        replyText = "That 12% increase is fantastic! The slide deck is going to look great for the board.";
+      } else if (cleanMsg.contains('photo') || cleanMsg.contains('image')) {
+        replyText = "Wow, that looks great! Thanks for sharing.";
+      } else if (cleanMsg.contains('file') || cleanMsg.contains('document') || cleanMsg.endsWith('.pdf') || cleanMsg.endsWith('.docx') || cleanMsg.endsWith('.xlsx')) {
+        replyText = "Got the file! I'll review it and let you know my feedback.";
+      } else if (cleanMsg.contains('location') || cleanMsg.contains('📍')) {
+        replyText = "Thanks for the location! I'm on my way.";
+      } else if (cleanMsg.contains('how are you')) {
+        replyText = "I'm doing great, thanks for asking! Hope you're having a productive day.";
+      } else if (cleanMsg.contains('bye') || cleanMsg.contains('goodbye')) {
+        replyText = "Goodbye! Speak to you later.";
+      } else if (cleanMsg.isEmpty) {
+        replyText = "👍";
+      }
+
+      messages.add(ChatDetailMessage(
+        text: replyText,
+        isSent: false,
+        time: _currentTime(),
+        isRead: false,
+      ));
+    });
+  }
+
+  void sendPreviewVoice() {
+    if (!hasRecordedVoice.value || previewVoicePath.value.isEmpty) return;
+
+    messages.add(ChatDetailMessage(
+      text: 'Voice Message',
+      isSent: true,
+      time: _currentTime(),
+      isVoice: true,
+      voicePath: previewVoicePath.value,
+      voiceDuration: previewDuration.value,
+    ));
+
+    hasRecordedVoice.value = false;
+    previewVoicePath.value = '';
+    previewDuration.value = 0;
+
+    scrollToBottom();
+    _simulatePeerReply('Voice Message');
+  }
+
+  void discardPreviewVoice() {
+    hasRecordedVoice.value = false;
+    previewVoicePath.value = '';
+    previewDuration.value = 0;
+  }
+
+  void onMicDragStart(DragStartDetails details) {
+    isDraggingMic.value = true;
+    micDragY.value = 0.0;
+  }
+
+  void onMicDragUpdate(DragUpdateDetails details) {
+    double newY = micDragY.value - details.delta.dy;
+    if (newY < 0) newY = 0;
+    if (newY > 100) newY = 100;
+    micDragY.value = newY;
+  }
+
+  void onMicDragEnd(DragEndDetails details) {
+    isDraggingMic.value = false;
+    if (micDragY.value >= 60.0) {
+      discardPreviewVoice();
+      Get.snackbar(
+        'Deleted',
+        'Voice message deleted',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: const Color(0xFFEF4444).withValues(alpha: 0.9),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 1),
+      );
+    }
+    micDragY.value = 0.0;
+  }
+
+  void onMicLongPressMove(LongPressMoveUpdateDetails details) {
+    double newY = -details.localOffsetFromOrigin.dy;
+    if (newY < 0) newY = 0;
+    if (newY > 100) newY = 100;
+    micDragY.value = newY;
+  }
+
+  void onMicLongPressEnd(LongPressEndDetails details) {
+    isDraggingMic.value = false;
+    final draggedToDelete = micDragY.value >= 60.0;
+    micDragY.value = 0.0;
+
+    if (draggedToDelete) {
+      cancelRecording();
+      Get.snackbar(
+        'Deleted',
+        'Voice message deleted',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: const Color(0xFFEF4444).withValues(alpha: 0.9),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 1),
+      );
+    } else {
+      stopRecording();
+    }
+  }
+
+  void reactToMessage(int index, String emoji) {
+    if (index >= 0 && index < messages.length) {
+      final msg = messages[index];
+      final newReaction = msg.reaction == emoji ? null : emoji;
+      messages[index] = msg.copyWith(reaction: newReaction);
+    }
   }
 }

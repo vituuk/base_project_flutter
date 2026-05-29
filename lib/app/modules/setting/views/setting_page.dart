@@ -50,20 +50,69 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ),
         actions: [
-          IconButton(
+          PopupMenuButton<String>(
             icon: Icon(Icons.more_vert_rounded, color: isDarkMode ? Colors.white : _primary, size: 24),
-            onPressed: () {
-              Get.showSnackbar(
-                GetSnackBar(
-                  message: 'Settings options tapped',
-                  duration: const Duration(seconds: 1),
-                  snackPosition: SnackPosition.BOTTOM,
-                  backgroundColor: isDarkMode ? const Color(0xFF334155) : const Color(0xFF1E293B),
-                  borderRadius: 8,
-                  margin: const EdgeInsets.all(16),
-                ),
-              );
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            color: cardColor,
+            elevation: 4,
+            offset: const Offset(0, 48),
+            onSelected: (value) {
+              if (value == 'theme') {
+                if (isDarkMode) {
+                  controller.setThemeMode(SettingConstants.themeModes[0]);
+                } else {
+                  controller.setThemeMode(SettingConstants.themeModes[1]);
+                }
+              } else if (value == 'logout') {
+                _showLogoutDialog(context, isDarkMode, textColor, subtitleColor);
+              }
             },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'theme',
+                child: Row(
+                  children: [
+                    Icon(
+                      isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round_outlined,
+                      color: isDarkMode ? Colors.yellow : const Color(0xFF1E293B),
+                      size: 20,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      isDarkMode ? 'Day Mode' : 'Night Mode',
+                      style: TextStyle(
+                        color: isDarkMode ? Colors.white : const Color(0xFF1E293B),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'logout',
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.logout_rounded,
+                      color: Color(0xFFEF4444),
+                      size: 20,
+                    ),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Logout',
+                      style: TextStyle(
+                        color: Color(0xFFEF4444),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(width: 8),
         ],
@@ -171,7 +220,7 @@ class _SettingPageState extends State<SettingPage> {
                   title: SettingConstants.itemPrivacyPolicy,
                   textColor: textColor,
                   iconColor: listIconColor,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.privacyPolicy),
                 ),
               ]),
               const SizedBox(height: 20),
@@ -183,7 +232,7 @@ class _SettingPageState extends State<SettingPage> {
                   title: SettingConstants.itemAddAccount,
                   textColor: _primary,
                   iconColor: _primary,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.addAccount),
                 ),
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(

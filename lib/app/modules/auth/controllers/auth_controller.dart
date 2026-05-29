@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../core/constants/auth/auth_constants.dart';
 import '../../../core/constants/auth/country_item.dart';
 import '../../../routes/app_routes.dart';
+import '../../../core/theme/theme_extensions.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class WelcomeController extends GetxController {
@@ -187,13 +188,14 @@ class VerificationController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     isLoading.value = false;
 
+    final isDarkMode = Theme.of(Get.context!).brightness == Brightness.dark;
     if (isChangeNumber) {
       Get.dialog(
         Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.card,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: Column(
@@ -203,8 +205,8 @@ class VerificationController extends GetxController {
                 Container(
                   width: 72,
                   height: 72,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFDCFCE7),
+                  decoration: BoxDecoration(
+                    color: isDarkMode ? const Color(0xFF14532D) : const Color(0xFFDCFCE7),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -224,20 +226,20 @@ class VerificationController extends GetxController {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
+                Text(
                   'Success',
                   style: TextStyle(
-                    color: Color(0xFF0F172A),
+                    color: AppColors.text,
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text(
+                Text(
                   'Your phone number has been successfully updated.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF64748B),
+                    color: AppColors.subtitle,
                     fontSize: 13,
                     height: 1.5,
                   ),

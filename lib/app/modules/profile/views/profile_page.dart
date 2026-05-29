@@ -55,7 +55,7 @@ class ProfilePage extends GetView<ProfileController> {
                         // ── 2. Call/Chat Actions row ─────────────────────────────
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: isSelf ? const SelfActions() : OtherActions(controller: controller),
+                          child: isSelf ? SelfActions() : OtherActions(controller: controller),
                         ),
                         const SizedBox(height: 24),
 

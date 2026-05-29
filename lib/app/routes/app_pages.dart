@@ -12,8 +12,8 @@ import '../modules/home/widgets/chat_page.dart';
 import '../modules/shell/views/shell_page.dart';
 import '../modules/shell/bindings/shell_binding.dart';
 import '../modules/chats/views/chat_detail_page.dart';
-import '../modules/chats/views/location_map_page.dart';
-import '../modules/chats/views/location_picker_page.dart';
+import '../modules/chats/widgets/location_map_page.dart';
+import '../modules/chats/widgets/location_picker_page.dart';
 import '../modules/chats/bindings/chat_detail_binding.dart';
 import '../modules/contact/views/contact_page.dart';
 import '../modules/contact/bindings/contact_binding.dart';
@@ -39,6 +39,16 @@ import '../modules/setting/widgets/invites_privacy_page.dart';
 import '../modules/setting/widgets/disappearing_messages_page.dart';
 import '../modules/setting/bindings/setting_binding.dart';
 import '../modules/setting/widgets/security_page.dart';
+import '../modules/setting/widgets/two_step_security_page.dart';
+import '../modules/setting/widgets/devices_security_page.dart';
+import '../modules/setting/widgets/notifications_page.dart';
+import '../modules/setting/widgets/ringtone_page.dart';
+import '../modules/setting/widgets/storage_data_page.dart';
+import '../modules/setting/widgets/help_center_page.dart';
+import '../modules/setting/widgets/contact_us_page.dart';
+import '../modules/setting/widgets/privacy_policy_page.dart';
+import '../modules/setting/widgets/add_account_page.dart';
+import '../modules/setting/widgets/choose_country_page.dart';
 
 
 class AppPages {
@@ -184,6 +194,56 @@ class AppPages {
       name: AppRoutes.security,
       page: () => const SecurityPage(),
       binding: SecurityBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.twoStepVerification,
+      page: () => const TwoStepSecurityPage(),
+      binding: TwoStepSecurityBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.devices,
+      page: () => const DevicesSecurityPage(),
+      binding: DevicesSecurityBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.notifications,
+      page: () => const NotificationsPage(),
+      binding: NotificationsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ringtone,
+      page: () => const RingtonePage(),
+      binding: NotificationsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.storage,
+      page: () => const StorageDataPage(),
+      binding: StorageBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.helpCenter,
+      page: () => const HelpCenterPage(),
+      binding: HelpCenterBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.contactUs,
+      page: () => const ContactUsPage(),
+      binding: ContactUsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.privacyPolicy,
+      page: () => const PrivacyPolicyPage(),
+      binding: PrivacyPolicyBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addAccount,
+      page: () => const AddAccountPage(),
+      binding: AddAccountBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.chooseCountry,
+      page: () => const ChooseCountryPage(),
+      binding: AddAccountBinding(),
     ),
     GetPage(
       name: AppRoutes.locationMap,

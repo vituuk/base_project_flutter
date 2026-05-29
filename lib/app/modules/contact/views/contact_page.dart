@@ -61,7 +61,7 @@ class ContactPage extends GetView<ContactController> {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.card,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -78,6 +78,7 @@ class ContactPage extends GetView<ContactController> {
                           : 'assets/icons/contact/list-name.svg',
                       width: 22,
                       height: 22,
+                      colorFilter: ColorFilter.mode(AppColors.text, BlendMode.srcIn),
                     )),
               ),
             ),
@@ -197,15 +198,237 @@ class ContactPage extends GetView<ContactController> {
   // ── FAB ────────────────────────────────────────────────────────────────────
   Widget _buildFab() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () => _showAddContactBottomSheet(),
       backgroundColor: _primary,
       shape: const CircleBorder(),
       child: SvgPicture.asset(
         'assets/icons/add-contact.svg',
         width: 24,
         height: 24,
-        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        colorFilter: ColorFilter.mode(
+          AppColors.isDarkMode ? const Color(0xFF0F172A) : Colors.white,
+          BlendMode.srcIn,
+        ),
       ),
+    );
+  }
+
+  void _showAddContactBottomSheet() {
+    final TextEditingController firstNameController = TextEditingController();
+    final TextEditingController lastNameController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+    final bool isDark = AppColors.isDarkMode;
+
+    final Color sheetBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final Color textColor = isDark ? Colors.white : const Color(0xFF111827);
+    final Color labelColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+    final Color fieldBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF2F5FC);
+    final Color borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 16,
+          bottom: Get.mediaQuery.viewInsets.bottom + 24, // Respect keyboard insets
+        ),
+        decoration: BoxDecoration(
+          color: sheetBg,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Drag Handle
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+
+              // First Name Field
+              Text(
+                'First name',
+                style: TextStyle(
+                  color: labelColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                decoration: BoxDecoration(
+                  color: fieldBg,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: borderColor),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                child: TextField(
+                  controller: firstNameController,
+                  style: TextStyle(color: textColor, fontSize: 15),
+                  decoration: InputDecoration(
+                    hintText: 'Tina',
+                    hintStyle: TextStyle(color: labelColor.withValues(alpha: 0.5), fontSize: 15),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Last Name Field
+              Text(
+                'Last name',
+                style: TextStyle(
+                  color: labelColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                decoration: BoxDecoration(
+                  color: fieldBg,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: borderColor),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                child: TextField(
+                  controller: lastNameController,
+                  style: TextStyle(color: textColor, fontSize: 15),
+                  decoration: InputDecoration(
+                    hintText: 'Lida',
+                    hintStyle: TextStyle(color: labelColor.withValues(alpha: 0.5), fontSize: 15),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Phone Number Field
+              Text(
+                'Phone number',
+                style: TextStyle(
+                  color: labelColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                decoration: BoxDecoration(
+                  color: fieldBg,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: borderColor),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                child: Row(
+                  children: [
+                    // Flag and Code
+                    Row(
+                      children: [
+                        const Text(
+                          '🇰🇭',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          '+855',
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '|',
+                          style: TextStyle(
+                            color: labelColor.withValues(alpha: 0.4),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                        style: TextStyle(color: textColor, fontSize: 15),
+                        decoration: InputDecoration(
+                          hintText: '12 555 666',
+                          hintStyle: TextStyle(color: labelColor.withValues(alpha: 0.5), fontSize: 15),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Create Contact Button
+              ElevatedButton(
+                onPressed: () {
+                  final first = firstNameController.text.trim();
+                  final last = lastNameController.text.trim();
+                  final phone = phoneController.text.trim();
+                  
+                  if (first.isEmpty && last.isEmpty) {
+                    Get.snackbar(
+                      'Input Error',
+                      'Please enter a name.',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.redAccent.withValues(alpha: 0.8),
+                      colorText: Colors.white,
+                    );
+                    return;
+                  }
+
+                  controller.addContact(
+                    firstName: first,
+                    lastName: last,
+                    phone: '+855 $phone',
+                  );
+                  Get.back(); // close bottom sheet
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF2046E8),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Create Contact',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
     );
   }
 
@@ -373,7 +596,7 @@ class _ContactCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: _onlineDot,
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: AppColors.card, width: 2),
                             ),
                           ),
                         ),
@@ -457,13 +680,14 @@ class _ContactCard extends StatelessWidget {
   }
 
   Widget _initialsAvatar() {
+    final bool isDark = AppColors.isDarkMode;
     return Container(
-      color: const Color(0xFFDDE6F9),
+      color: isDark ? const Color(0xFF334155) : const Color(0xFFDDE6F9),
       alignment: Alignment.center,
       child: Text(
         contact.initials,
         style: TextStyle(
-          color: _primary,
+          color: isDark ? Colors.white : _primary,
           fontSize: 16,
           fontWeight: FontWeight.w700,
         ),

@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import '../../../core/theme/theme_controller.dart';
 import '../../../core/theme/theme_extensions.dart';
@@ -300,6 +302,8 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                   time: controller.currentTime(),
                   isRead: false,
                 ));
+                controller.scrollToBottom();
+                controller.triggerPeerReply('📍 Location Shared');
               }
             },
           ),
@@ -369,11 +373,19 @@ class ChatDetailPage extends GetView<ChatDetailController> {
   Widget _buildMessageList() {
     return Obx(() {
       final msgs = controller.messages;
+      final isTyping = controller.isPeerTyping.value;
+      final totalCount = msgs.length + 1 + (isTyping ? 1 : 0);
+
       return ListView.builder(
+        controller: controller.scrollController,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        itemCount: msgs.length + 1, // +1 for date header
+        itemCount: totalCount,
         itemBuilder: (context, index) {
           if (index == 0) return _buildDateDivider('Yesterday, 4:32 PM');
+
+          if (isTyping && index == totalCount - 1) {
+            return _buildTypingIndicator(context);
+          }
 
           final msg = msgs[index - 1];
           final isLast = index == msgs.length;
@@ -382,6 +394,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
 
           return MessageBubble(
             message: msg,
+            messageIndex: index - 1,
             showAvatar: !msg.isSent && !prevIsSameSender,
             isLastOfGroup: isLast ||
                 (index < msgs.length && msgs[index].isSent != msg.isSent),
@@ -425,6 +438,78 @@ class ChatDetailPage extends GetView<ChatDetailController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Reply Preview Layout
+            Obx(() {
+              final replyVal = controller.replyMessage.value;
+              if (replyVal == null) return const SizedBox.shrink();
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              final previewBg = isDark ? const Color(0xFF2C2C2E) : const Color(0xFFF2F2F7);
+              final senderName = replyVal.isSent ? 'You' : controller.userName.value;
+
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: previewBg,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: AppColors.divider,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 3.5,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2046E8),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            senderName,
+                            style: const TextStyle(
+                              color: Color(0xFF2046E8),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            replyVal.isCallLog
+                                ? 'Call Log'
+                                : replyVal.isVoice
+                                    ? 'Voice Message'
+                                    : replyVal.isImage
+                                        ? 'Photo'
+                                        : replyVal.isFile
+                                            ? 'File'
+                                            : replyVal.text,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: isDark ? Colors.white70 : const Color(0xFF4B5563),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, size: 18),
+                      color: isDark ? Colors.white54 : const Color(0xFF9CA3AF),
+                      onPressed: () => controller.replyMessage.value = null,
+                    ),
+                  ],
+                ),
+              );
+            }),
             // Image Preview List
             Obx(() {
               if (controller.selectedImagePaths.isEmpty) {
@@ -525,6 +610,13 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                         ),
                       ),
                     ),
+                  ] else if (controller.hasRecordedVoice.value) ...[
+                    Expanded(
+                      child: VoicePreviewPill(
+                        voicePath: controller.previewVoicePath.value,
+                        duration: controller.previewDuration.value,
+                      ),
+                    ),
                   ] else ...[
                     // ── Add / attachment button ──────────────────────────────────
                     GestureDetector(
@@ -615,31 +707,99 @@ class ChatDetailPage extends GetView<ChatDetailController> {
 
                   // ── Voice button (always visible) ────────────────────────────
                   GestureDetector(
-                    onLongPressStart: (_) => controller.startRecording(),
-                    onLongPressEnd: (_) => controller.stopRecording(),
-                    onTap: () {
-                      Get.snackbar(
-                        'Voice Message',
-                        'Hold the microphone icon to record a voice message.',
-                        snackPosition: SnackPosition.BOTTOM,
-                        duration: const Duration(seconds: 2),
-                      );
-                    },
+                    onVerticalDragStart: controller.hasRecordedVoice.value ? controller.onMicDragStart : null,
+                    onVerticalDragUpdate: controller.hasRecordedVoice.value ? controller.onMicDragUpdate : null,
+                    onVerticalDragEnd: controller.hasRecordedVoice.value ? controller.onMicDragEnd : null,
                     behavior: HitTestBehavior.opaque,
-                    child: SvgPicture.asset(
-                      'assets/icons/send-voice.svg',
-                      width: 24,
-                      height: 24,
-                      colorFilter: controller.isRecording.value
-                          ? const ColorFilter.mode(Colors.redAccent, BlendMode.srcIn)
-                          : null,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: [
+                        if ((controller.hasRecordedVoice.value || controller.isRecording.value) && controller.micDragY.value > 0)
+                          Positioned(
+                            top: -64,
+                            child: Builder(builder: (context) {
+                              final dragY = controller.micDragY.value;
+                              final opacity = (dragY / 40.0).clamp(0.0, 1.0);
+                              final scale = dragY >= 60.0 ? 1.3 : (0.5 + (dragY / 60.0) * 0.5).clamp(0.5, 1.0);
+                              final color = dragY >= 60.0 ? const Color(0xFFEF4444) : const Color(0xFFEF4444).withValues(alpha: 0.85);
+
+                              return Opacity(
+                                opacity: opacity,
+                                child: Transform.scale(
+                                  scale: scale,
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: color,
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withValues(alpha: dragY >= 60.0 ? 0.3 : 0.15),
+                                          blurRadius: dragY >= 60.0 ? 12 : 8,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ],
+                                    ),
+                                    child: const Icon(
+                                      Icons.delete_outline_rounded,
+                                      color: Colors.white,
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        Transform.translate(
+                          offset: Offset(0, -controller.micDragY.value),
+                          child: GestureDetector(
+                            onLongPressStart: controller.hasRecordedVoice.value ? null : (_) => controller.startRecording(),
+                            onLongPressMoveUpdate: controller.hasRecordedVoice.value ? null : (details) => controller.onMicLongPressMove(details),
+                            onLongPressEnd: controller.hasRecordedVoice.value ? null : (details) => controller.onMicLongPressEnd(details),
+                            onTap: () {
+                              if (controller.hasRecordedVoice.value) {
+                                Get.snackbar(
+                                  'Drag to Delete',
+                                  'Hold the microphone icon and drag it UP to delete the recording.',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  duration: const Duration(seconds: 2),
+                                );
+                              } else {
+                                Get.snackbar(
+                                  'Voice Message',
+                                  'Hold the microphone icon to record a voice message.',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  duration: const Duration(seconds: 2),
+                                );
+                              }
+                            },
+                            behavior: HitTestBehavior.opaque,
+                            child: SvgPicture.asset(
+                              'assets/icons/send-voice.svg',
+                              width: 24,
+                              height: 24,
+                              colorFilter: controller.isRecording.value
+                                  ? const ColorFilter.mode(Colors.redAccent, BlendMode.srcIn)
+                                  : null,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 8),
 
                   // ── Send button (always visible) ─────────────────────────────
                   GestureDetector(
-                    onTap: controller.sendMessage,
+                    onTap: () {
+                      if (controller.hasRecordedVoice.value) {
+                        controller.sendPreviewVoice();
+                      } else {
+                        controller.sendMessage();
+                      }
+                    },
                     behavior: HitTestBehavior.opaque,
                     child: SvgPicture.asset(
                       'assets/icons/send-message.svg',
@@ -652,6 +812,264 @@ class ChatDetailPage extends GetView<ChatDetailController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTypingIndicator(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8, right: 60),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // Avatar
+          Container(
+            width: 32,
+            height: 32,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            child: ClipOval(
+              child: controller.avatarUrl.value.isNotEmpty
+                  ? Image.network(
+                      controller.avatarUrl.value,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => CircleAvatar(
+                        backgroundColor: const Color(0xFFDDE6F9),
+                        child: Icon(Icons.person_rounded, color: _primary, size: 16),
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundColor: const Color(0xFFDDE6F9),
+                      child: Icon(Icons.person_rounded, color: _primary, size: 16),
+                    ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.isDarkMode ? AppColors.card : Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+                bottomLeft: Radius.circular(4),
+                bottomRight: Radius.circular(18),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: const TypingIndicator(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TypingIndicator extends StatefulWidget {
+  const TypingIndicator({super.key});
+
+  @override
+  State<TypingIndicator> createState() => _TypingIndicatorState();
+}
+
+class _TypingIndicatorState extends State<TypingIndicator> with TickerProviderStateMixin {
+  late List<AnimationController> _controllers;
+  late List<Animation<double>> _animations;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = List.generate(3, (index) {
+      return AnimationController(
+        duration: const Duration(milliseconds: 600),
+        vsync: this,
+      );
+    });
+
+    _animations = _controllers.map((controller) {
+      return Tween<double>(begin: 0.2, end: 1.0).animate(
+        CurvedAnimation(parent: controller, curve: Curves.easeInOut),
+      );
+    }).toList();
+
+    _startAnimations();
+  }
+
+  void _startAnimations() async {
+    for (int i = 0; i < 3; i++) {
+      if (!mounted) return;
+      await Future.delayed(const Duration(milliseconds: 150));
+      if (!mounted) return;
+      _controllers[i].repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color dotColor = AppColors.isDarkMode ? const Color(0xFFCBD5E1) : const Color(0xFF6B7280);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(3, (index) {
+        return FadeTransition(
+          opacity: _animations[index],
+          child: ScaleTransition(
+            scale: _animations[index],
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 2.0),
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: dotColor,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class VoicePreviewPill extends StatefulWidget {
+  const VoicePreviewPill({
+    super.key,
+    required this.voicePath,
+    required this.duration,
+  });
+
+  final String voicePath;
+  final int duration;
+
+  @override
+  State<VoicePreviewPill> createState() => _VoicePreviewPillState();
+}
+
+class _VoicePreviewPillState extends State<VoicePreviewPill> {
+  late AudioPlayer _audioPlayer;
+  PlayerState _playerState = PlayerState.stopped;
+
+  StreamSubscription? _stateSubscription;
+  StreamSubscription? _completeSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _audioPlayer = AudioPlayer();
+
+    _stateSubscription = _audioPlayer.onPlayerStateChanged.listen((state) {
+      if (mounted) {
+        setState(() {
+          _playerState = state;
+        });
+      }
+    });
+
+    _completeSubscription = _audioPlayer.onPlayerComplete.listen((event) {
+      if (mounted) {
+        setState(() {
+          _playerState = PlayerState.stopped;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription?.cancel();
+    _completeSubscription?.cancel();
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _togglePlay() async {
+    if (widget.voicePath.isEmpty) return;
+
+    if (_playerState == PlayerState.playing) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(DeviceFileSource(widget.voicePath));
+    }
+  }
+
+  String _formatDuration(int totalSeconds) {
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isPlaying = _playerState == PlayerState.playing;
+
+    return Container(
+      height: 44,
+      decoration: BoxDecoration(
+        color: const Color(0xFF2046E8),
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 12),
+          GestureDetector(
+            onTap: _togglePlay,
+            child: Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                color: Colors.white,
+                size: 18,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(24, (index) {
+                final heights = [8, 14, 10, 18, 12, 22, 14, 8, 16, 20, 12, 10, 8, 14, 10, 18, 12, 22, 14, 8, 16, 20, 12, 10];
+                return Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 1.0),
+                    height: heights[index % heights.length].toDouble(),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.6),
+                      borderRadius: BorderRadius.circular(1),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            _formatDuration(widget.duration),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(width: 16),
+        ],
       ),
     );
   }

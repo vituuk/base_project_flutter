@@ -1,4 +1,3 @@
-/// Model representing a single message in the chat detail screen.
 class ChatDetailMessage {
   final String text;
   final bool isSent;
@@ -15,6 +14,9 @@ class ChatDetailMessage {
   final bool isFile;
   final String? fileName;
   final String? fileSize;
+  final String? reaction;
+  final String? repliedToText;
+  final String? repliedToSender;
 
   const ChatDetailMessage({
     required this.text,
@@ -32,7 +34,52 @@ class ChatDetailMessage {
     this.isFile = false,
     this.fileName,
     this.fileSize,
+    this.reaction,
+    this.repliedToText,
+    this.repliedToSender,
   });
+
+  ChatDetailMessage copyWith({
+    String? text,
+    bool? isSent,
+    String? time,
+    bool? isRead,
+    bool? isCallLog,
+    String? callType,
+    String? callDuration,
+    bool? isVoice,
+    String? voicePath,
+    int? voiceDuration,
+    bool? isImage,
+    String? imagePath,
+    bool? isFile,
+    String? fileName,
+    String? fileSize,
+    String? reaction,
+    String? repliedToText,
+    String? repliedToSender,
+  }) {
+    return ChatDetailMessage(
+      text: text ?? this.text,
+      isSent: isSent ?? this.isSent,
+      time: time ?? this.time,
+      isRead: isRead ?? this.isRead,
+      isCallLog: isCallLog ?? this.isCallLog,
+      callType: callType ?? this.callType,
+      callDuration: callDuration ?? this.callDuration,
+      isVoice: isVoice ?? this.isVoice,
+      voicePath: voicePath ?? this.voicePath,
+      voiceDuration: voiceDuration ?? this.voiceDuration,
+      isImage: isImage ?? this.isImage,
+      imagePath: imagePath ?? this.imagePath,
+      isFile: isFile ?? this.isFile,
+      fileName: fileName ?? this.fileName,
+      fileSize: fileSize ?? this.fileSize,
+      reaction: reaction ?? this.reaction,
+      repliedToText: repliedToText ?? this.repliedToText,
+      repliedToSender: repliedToSender ?? this.repliedToSender,
+    );
+  }
 }
 
 /// Static seed data for the chat detail / conversation screen.

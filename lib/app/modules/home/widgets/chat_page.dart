@@ -407,6 +407,7 @@ class _ChatTile extends StatelessWidget {
   static Color get _darkText => AppColors.text;
   static Color get _subtitleColor => AppColors.subtitle;
   static Color get _timeColor => AppColors.subtitle;
+  static Color get _badgeBg => const Color(0xFF2046E8);
 
   @override
   Widget build(BuildContext context) {
@@ -521,7 +522,7 @@ class _ChatTile extends StatelessWidget {
                           width: 22,
                           height: 22,
                           decoration: BoxDecoration(
-                            color: _primary,
+                            color: _badgeBg,
                             shape: BoxShape.circle,
                           ),
                           alignment: Alignment.center,

@@ -31,6 +31,16 @@ class AppRoutes {
   static const invitesPrivacy = '/invites-privacy';
   static const disappearingMessages = '/disappearing-messages';
   static const security             = '/security';
+  static const twoStepVerification  = '/two-step-verification';
+  static const devices              = '/devices';
+  static const notifications        = '/notifications';
+  static const ringtone             = '/ringtone';
+  static const storage              = '/storage';
+  static const helpCenter           = '/help-center';
+  static const contactUs            = '/contact-us';
+  static const privacyPolicy        = '/privacy-policy';
+  static const addAccount           = '/add-account';
+  static const chooseCountry        = '/choose-country';
   static const locationMap          = '/location-map';
   static const locationPicker       = '/location-picker';
 }

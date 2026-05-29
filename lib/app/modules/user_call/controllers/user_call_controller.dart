@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class UserCallController extends GetxController {
   // ── Call details passed via Get.arguments ───────────────────────────────────
@@ -12,6 +14,7 @@ class UserCallController extends GetxController {
   final isMuted = false.obs;
   final isSpeaker = false.obs;
   final isFrontCamera = true.obs;
+  final cameraRotationTurns = 0.obs;
 
   // ── Camera Controller ───────────────────────────────────────────────────────
   List<CameraDescription> cameras = [];
@@ -93,6 +96,12 @@ class UserCallController extends GetxController {
 
     try {
       await cameraController!.initialize();
+      try {
+        await cameraController!.lockCaptureOrientation(DeviceOrientation.portraitUp);
+      } catch (e) {
+        print("Failed to lock capture orientation: $e");
+      }
+      await _updateRotationForDevice();
       isCameraInitialized.value = true;
     } catch (e) {
       print("Camera initialization error: $e");
@@ -101,6 +110,29 @@ class UserCallController extends GetxController {
         '$e',
         snackPosition: SnackPosition.BOTTOM,
       );
+    }
+  }
+
+  Future<void> _updateRotationForDevice() async {
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+      bool isEmulator = false;
+      if (GetPlatform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        isEmulator = !androidInfo.isPhysicalDevice;
+      } else if (GetPlatform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        isEmulator = !iosInfo.isPhysicalDevice;
+      }
+      
+      if (isEmulator) {
+        cameraRotationTurns.value = isFrontCamera.value ? 2 : 0;
+      } else {
+        cameraRotationTurns.value = 0;
+      }
+    } catch (e) {
+      print("Error detecting emulator: $e");
+      cameraRotationTurns.value = 0;
     }
   }
 

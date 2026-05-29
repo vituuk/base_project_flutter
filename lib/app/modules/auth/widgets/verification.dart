@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/auth/auth_constants.dart';
+import '../../../core/theme/theme_extensions.dart';
 import '../controllers/auth_controller.dart';
 
 class VerificationPage extends StatefulWidget {
@@ -23,22 +24,23 @@ class _VerificationPageState extends State<VerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    const Color bgColor = Color(0xFFF2F5FC);
-    const Color primaryBlue = Color(0xFF2046E8);
-    const Color darkText = Color(0xFF111827);
-    const Color subtitleColor = Color(0xFF6B7280);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final Color bgColor = AppColors.bg;
+    final Color primaryBlue = AppColors.primary;
+    final Color darkText = AppColors.text;
+    final Color subtitleColor = AppColors.subtitle;
 
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: bgColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Get.back(),
-          child: const Icon(Icons.arrow_back_ios_new_rounded,
+          child: Icon(Icons.arrow_back_ios_new_rounded,
               color: darkText, size: 20),
         ),
-        title: const Text(
+        title: Text(
           AuthConstants.verificationTitle,
           style: TextStyle(
             color: darkText,
@@ -56,11 +58,11 @@ class _VerificationPageState extends State<VerificationPage> {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.card,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: Colors.black.withValues(alpha: 0.04),
                     blurRadius: 20,
                     offset: const Offset(0, 4),
                   ),
@@ -74,12 +76,12 @@ class _VerificationPageState extends State<VerificationPage> {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFDDE6F9),
+                      color: isDarkMode ? const Color(0xFF1E293B) : const Color(0xFFDDE6F9),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.shield_rounded,
-                      color: primaryBlue,
+                      color: isDarkMode ? Colors.white : primaryBlue,
                       size: 30,
                     ),
                   ),
@@ -87,7 +89,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   const SizedBox(height: 20),
 
                   // ── "Verify Code" heading ─────────────────────────────
-                  const Text(
+                  Text(
                     AuthConstants.verificationHeading,
                     style: TextStyle(
                       fontSize: 22,
@@ -107,7 +109,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     return Text(
                       'Enter the ${AuthConstants.otpLength}-digit code sent to $phone',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         color: subtitleColor,
                         height: 1.5,
@@ -138,7 +140,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     alignment: Alignment.centerLeft,
                     child: Obx(() => Text(
                           controller.formattedTime,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             color: subtitleColor,
                             fontWeight: FontWeight.w500,
@@ -158,40 +160,41 @@ class _VerificationPageState extends State<VerificationPage> {
                               : controller.verify,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryBlue,
-                            foregroundColor: Colors.white,
+                            foregroundColor: isDarkMode ? Colors.black : Colors.white,
                             disabledBackgroundColor:
-                                primaryBlue.withOpacity(0.6),
+                                primaryBlue.withValues(alpha: 0.6),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14),
                             ),
                           ),
                           child: controller.isLoading.value
-                              ? const SizedBox(
+                              ? SizedBox(
                                   width: 22,
                                   height: 22,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2.5,
                                     valueColor:
                                         AlwaysStoppedAnimation<Color>(
-                                            Colors.white),
+                                            isDarkMode ? Colors.black : Colors.white),
                                   ),
                                 )
                               : Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Text(
                                       AuthConstants.verificationButton,
                                       style: TextStyle(
+                                        color: isDarkMode ? Colors.black : Colors.white,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: 0.2,
                                       ),
                                     ),
-                                    SizedBox(width: 10),
-                                    Icon(Icons.arrow_forward,
-                                        size: 18, color: Colors.white),
+                                    const SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_rounded,
+                                        size: 18, color: isDarkMode ? Colors.black : Colors.white),
                                   ],
                                 ),
                         ),
@@ -200,7 +203,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   const SizedBox(height: 20),
 
                   // ── Resend section ────────────────────────────────────
-                  const Text(
+                  Text(
                     AuthConstants.verificationResendPrompt,
                     style: TextStyle(
                       fontSize: 14,
@@ -220,7 +223,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: controller.canResend.value
-                                ? primaryBlue
+                                ? (isDarkMode ? Colors.white : primaryBlue)
                                 : Colors.grey.shade400,
                           ),
                         ),
@@ -236,7 +239,7 @@ class _VerificationPageState extends State<VerificationPage> {
               RichText(
                 text: TextSpan(
                   text: AuthConstants.verificationBackTo,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     color: subtitleColor,
                     fontWeight: FontWeight.w400,
@@ -245,12 +248,12 @@ class _VerificationPageState extends State<VerificationPage> {
                     WidgetSpan(
                       child: GestureDetector(
                         onTap: () => Get.back(),
-                        child: const Text(
+                        child: Text(
                           AuthConstants.verificationSignIn,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: primaryBlue,
+                            color: isDarkMode ? Colors.white : primaryBlue,
                           ),
                         ),
                       ),
@@ -267,7 +270,7 @@ class _VerificationPageState extends State<VerificationPage> {
               children: [
                 GestureDetector(
                   onTap: () {},
-                  child: const Text(
+                  child: Text(
                     AuthConstants.privacyPolicy,
                     style: TextStyle(
                       fontSize: 13,
@@ -278,7 +281,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 const SizedBox(width: 24),
                 GestureDetector(
                   onTap: () {},
-                  child: const Text(
+                  child: Text(
                     AuthConstants.termsOfService,
                     style: TextStyle(
                       fontSize: 13,
@@ -314,6 +317,7 @@ class _OtpBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       width: 46,
       height: 54,
@@ -325,25 +329,27 @@ class _OtpBox extends StatelessWidget {
         maxLength: 1,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: onChanged,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
-          color: Color(0xFF111827),
+          color: AppColors.text,
         ),
         decoration: InputDecoration(
           counterText: '',
           contentPadding: EdgeInsets.zero,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide:
-                const BorderSide(color: Color(0xFFDDE3EE), width: 1.2),
+            borderSide: BorderSide(
+              color: isDarkMode ? const Color(0xFF334155) : const Color(0xFFDDE3EE),
+              width: 1.2,
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: primaryBlue, width: 1.8),
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: AppColors.input,
         ),
       ),
     );

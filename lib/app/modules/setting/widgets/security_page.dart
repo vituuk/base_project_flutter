@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/setting/security/security_constants.dart';
 import '../../../core/theme/theme_extensions.dart';
+import '../../../routes/app_routes.dart';
 import '../controllers/setting_controller.dart';
 
 class SecurityPage extends GetView<SecurityController> {
@@ -48,10 +49,7 @@ class SecurityPage extends GetView<SecurityController> {
                       icon: Icons.phonelink_lock_rounded,
                       title: SecurityConstants.itemTwoStepVerification,
                       subtitle: controller.twoStepLabel,
-                      onTap: () => _showComingSoon(
-                        SecurityConstants.snackTwoStepTitle,
-                        isDarkMode,
-                      ),
+                      onTap: () => Get.toNamed(AppRoutes.twoStepVerification),
                     )),
                 _buildDivider(),
                 // Security Notifications toggle
@@ -80,10 +78,7 @@ class SecurityPage extends GetView<SecurityController> {
                       icon: Icons.devices_rounded,
                       title: SecurityConstants.itemDevices,
                       count: controller.deviceCount.value,
-                      onTap: () => _showComingSoon(
-                        SecurityConstants.snackDevicesTitle,
-                        isDarkMode,
-                      ),
+                      onTap: () => Get.toNamed(AppRoutes.devices),
                     )),
               ]),
             ],
@@ -95,19 +90,7 @@ class SecurityPage extends GetView<SecurityController> {
 
   // ── Private helpers ──────────────────────────────────────────────────────────
 
-  void _showComingSoon(String title, bool isDarkMode) {
-    Get.snackbar(
-      title,
-      SecurityConstants.snackComingSoon,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor:
-          isDarkMode ? const Color(0xFF334155) : const Color(0xFF1E293B),
-      colorText: Colors.white,
-      borderRadius: 8,
-      margin: const EdgeInsets.all(16),
-      duration: const Duration(seconds: 1),
-    );
-  }
+
 
   Widget _buildSectionHeader(String title) {
     return Padding(

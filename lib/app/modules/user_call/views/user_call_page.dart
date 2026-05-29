@@ -215,45 +215,56 @@ class UserCallPage extends GetView<UserCallController> {
   // ── Floating PIP (Picture in Picture) Inset Card ───────────────────────────
   Widget _buildFloatingInset() {
     final isVideo = controller.isVideo.value;
-    return Container(
-      width: 104,
-      height: 144,
-      decoration: BoxDecoration(
-        color: _bgSlate800.withValues(alpha: 0.95),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          // Window Content (User Selfie / Camera or User Circular Avatar)
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: isVideo
-                  ? Obx(() {
-                      if (controller.isCameraInitialized.value &&
-                          controller.cameraController != null) {
-                        return FittedBox(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        if (isVideo) {
+          controller.cameraRotationTurns.value =
+              (controller.cameraRotationTurns.value + 2) % 4;
+        }
+      },
+      child: Container(
+        width: 104,
+        height: 144,
+        decoration: BoxDecoration(
+          color: _bgSlate800.withValues(alpha: 0.95),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.25),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            // Window Content (User Selfie / Camera or User Circular Avatar)
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: isVideo
+                    ? Obx(() {
+                        if (controller.isCameraInitialized.value &&
+                            controller.cameraController != null) {
+                          return FittedBox(
+                            fit: BoxFit.cover,
+                            child: SizedBox(
+                              width: 100,
+                              height: 100 * controller.cameraController!.value.aspectRatio,
+                              child: RotatedBox(
+                                quarterTurns: controller.cameraRotationTurns.value,
+                                child: CameraPreview(controller.cameraController!),
+                              ),
+                            ),
+                          );
+                        }
+                        return Image.network(
+                          _userSelfieImage,
                           fit: BoxFit.cover,
-                          child: SizedBox(
-                            width: 100,
-                            height: 100 * controller.cameraController!.value.aspectRatio,
-                            child: CameraPreview(controller.cameraController!),
-                          ),
+                          errorBuilder: (context, error, stackTrace) => _buildAvatarPlaceholder(),
                         );
-                      }
-                      return Image.network(
-                        _userSelfieImage,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => _buildAvatarPlaceholder(),
-                      );
-                    })
+                      })
                   : Center(
                       child: Container(
                         width: 60,
@@ -292,8 +303,9 @@ class UserCallPage extends GetView<UserCallController> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildAvatarPlaceholder() {
     return Container(

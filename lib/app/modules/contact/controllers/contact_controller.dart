@@ -77,4 +77,14 @@ class ContactController extends GetxController {
   void toggleSortType() {
     sortByLastSeen.value = !sortByLastSeen.value;
   }
+
+  void addContact({required String firstName, required String lastName, required String phone}) {
+    final fullName = '$firstName $lastName'.trim();
+    if (fullName.isEmpty) return;
+    _contacts.add(ContactItem(
+      name: fullName,
+      status: 'offline',
+      isOnline: false,
+    ));
+  }
 }

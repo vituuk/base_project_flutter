@@ -63,6 +63,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
   }
 
   void _showCountrySelector() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet(
       context: context,
       backgroundColor: AppColors.card,
@@ -77,7 +78,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Text(
                   'Select Country',
                   style: TextStyle(
@@ -87,7 +88,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                   ),
                 ),
               ),
-              const Divider(color: Color(0xFFF1F5F9)),
+              Divider(color: isDarkMode ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
               Flexible(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -97,7 +98,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                     return ListTile(
                       leading: Text(
                         country.flag,
-                        style: TextStyle(fontSize: 24),
+                        style: const TextStyle(fontSize: 24),
                       ),
                       title: Text(
                         country.name,
@@ -141,6 +142,8 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: const Color(0xFFF59E0B),
         colorText: Colors.white,
+        borderRadius: 8,
+        margin: const EdgeInsets.all(16),
       );
       return;
     }
@@ -156,6 +159,8 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: _bg,
       appBar: AppBar(
@@ -168,7 +173,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
             onTap: () => Get.back(),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: _primary,
+              color: isDarkMode ? Colors.white : _primary,
               size: 18,
             ),
           ),
@@ -177,7 +182,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
         title: Text(
           'Change number',
           style: TextStyle(
-            color: _primary,
+            color: isDarkMode ? Colors.white : _primary,
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
@@ -214,7 +219,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                         Text(
                           'New Number',
                           style: TextStyle(
-                            color: Color(0xFF0F172A),
+                            color: isDarkMode ? Colors.white : const Color(0xFF0F172A),
                             fontSize: 22,
                             fontWeight: FontWeight.w800,
                           ),
@@ -242,7 +247,9 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.symmetric(horizontal: 12),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: const Color(0xFFCBD5E1)),
+                                  border: Border.all(
+                                    color: isDarkMode ? const Color(0xFF334155) : const Color(0xFFCBD5E1),
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Row(
@@ -250,7 +257,7 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                                   children: [
                                     Text(
                                       _selectedCountry.flag,
-                                      style: TextStyle(fontSize: 18),
+                                      style: const TextStyle(fontSize: 18),
                                     ),
                                     const SizedBox(width: 6),
                                     Text(
@@ -280,7 +287,9 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: const Color(0xFFCBD5E1)),
+                                  border: Border.all(
+                                    color: isDarkMode ? const Color(0xFF334155) : const Color(0xFFCBD5E1),
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Center(
@@ -336,10 +345,10 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
                 ),
               ],
             ),
-            child: Icon(
-              Icons.arrow_forward_ios_rounded,
+            child: const Icon(
+              Icons.arrow_forward_rounded,
               color: Colors.white,
-              size: 20,
+              size: 24,
             ),
           ),
         ),
