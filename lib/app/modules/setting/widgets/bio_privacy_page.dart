@@ -25,8 +25,7 @@ class BioPrivacyPage extends GetView<BioPrivacyController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Bio Privacy',
+        title: Text('Bio Privacy'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -65,8 +64,7 @@ class BioPrivacyPage extends GetView<BioPrivacyController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'BIO',
+                            Text('BIO'.tr,
                               style: TextStyle(
                                 color: isDarkMode ? const Color(0xFF64748B) : const Color(0xFF475569),
                                 fontSize: 12,
@@ -75,8 +73,7 @@ class BioPrivacyPage extends GetView<BioPrivacyController> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Who can see my bio?',
+                            Text('Who can see my bio?'.tr,
                               style: TextStyle(
                                 color: AppColors.subtitle,
                                 fontSize: 12,
@@ -125,8 +122,7 @@ class BioPrivacyPage extends GetView<BioPrivacyController> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           child: Row(
             children: [
-              Text(
-                option,
+              Text(option.tr,
                 style: TextStyle(
                   color: AppColors.text,
                   fontSize: 15,

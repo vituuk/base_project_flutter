@@ -25,8 +25,7 @@ class AddAccountPage extends GetView<AddAccountController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Add Account',
+        title: Text('Add Account'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -59,9 +58,8 @@ class AddAccountPage extends GetView<AddAccountController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Header label
-                    const Text(
-                      'ADD ACCOUNT',
-                      style: TextStyle(
+                    Text('ADD ACCOUNT'.tr,
+                      style: const TextStyle(
                         color: Color(0xFF64748B),
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -71,9 +69,8 @@ class AddAccountPage extends GetView<AddAccountController> {
                     const SizedBox(height: 20),
 
                     // Label: Choose a country
-                    const Text(
-                      'Choose a country',
-                      style: TextStyle(
+                    Text('Choose a country'.tr,
+                      style: const TextStyle(
                         color: Color(0xFF94A3B8),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -101,8 +98,7 @@ class AddAccountPage extends GetView<AddAccountController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Obx(() => Text(
-                              '${controller.selectedCountry.value.flag}  ${controller.selectedCountry.value.name}',
+                            Obx(() => Text('${controller.selectedCountry.value.flag}  ${controller.selectedCountry.value.name}'.tr,
                               style: TextStyle(
                                 color: AppColors.text,
                                 fontSize: 14,
@@ -121,9 +117,8 @@ class AddAccountPage extends GetView<AddAccountController> {
                     const SizedBox(height: 20),
 
                     // Label: Phone number
-                    const Text(
-                      'Phone number',
-                      style: TextStyle(
+                    Text('Phone number'.tr,
+                      style: const TextStyle(
                         color: Color(0xFF94A3B8),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -143,8 +138,7 @@ class AddAccountPage extends GetView<AddAccountController> {
                       child: Row(
                         children: [
                           // Flag & Dial Code
-                          Obx(() => Text(
-                            '${controller.selectedCountry.value.flag} ${controller.selectedCountry.value.code}',
+                          Obx(() => Text('${controller.selectedCountry.value.flag} ${controller.selectedCountry.value.code}'.tr,
                             style: TextStyle(
                               color: AppColors.text,
                               fontSize: 14,

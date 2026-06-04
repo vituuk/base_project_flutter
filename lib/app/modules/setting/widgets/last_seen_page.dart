@@ -25,8 +25,7 @@ class LastSeenPage extends GetView<LastSeenController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Last Seen',
+        title: Text('Last Seen'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -65,8 +64,7 @@ class LastSeenPage extends GetView<LastSeenController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'LAST SEEN',
+                            Text('LAST SEEN'.tr,
                               style: TextStyle(
                                 color: isDarkMode ? const Color(0xFF64748B) : const Color(0xFF475569),
                                 fontSize: 12,
@@ -75,8 +73,7 @@ class LastSeenPage extends GetView<LastSeenController> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Who can see my last seen time?',
+                            Text('Who can see my last seen time?'.tr,
                               style: TextStyle(
                                 color: AppColors.subtitle,
                                 fontSize: 12,
@@ -125,8 +122,7 @@ class LastSeenPage extends GetView<LastSeenController> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           child: Row(
             children: [
-              Text(
-                option,
+              Text(option.tr,
                 style: TextStyle(
                   color: AppColors.text,
                   fontSize: 15,

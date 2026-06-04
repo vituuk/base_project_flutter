@@ -77,8 +77,7 @@ class _EditNamePageState extends State<EditNamePage> {
           ),
         ),
         titleSpacing: 8,
-        title: Text(
-          'Your Name',
+        title: Text('Your Name'.tr,
           style: TextStyle(
             color: _primary,
             fontSize: 18,
@@ -118,8 +117,7 @@ class _EditNamePageState extends State<EditNamePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'YOUR NAME',
+                            Text('YOUR NAME'.tr,
                               style: TextStyle(
                                 color: _primary,
                                 fontSize: 13,
@@ -127,8 +125,7 @@ class _EditNamePageState extends State<EditNamePage> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Change your name',
+                            Text('Change your name'.tr,
                               style: TextStyle(
                                 color: _subtitleColor,
                                 fontSize: 12,
@@ -137,8 +134,7 @@ class _EditNamePageState extends State<EditNamePage> {
                             const SizedBox(height: 24),
                             
                             // First Name Field
-                            Text(
-                              'First name',
+                            Text('First name'.tr,
                               style: TextStyle(
                                 color: Color(0xFF94A3B8),
                                 fontSize: 11,
@@ -165,8 +161,7 @@ class _EditNamePageState extends State<EditNamePage> {
                             const SizedBox(height: 16),
 
                             // Last Name Field
-                            Text(
-                              'Last name',
+                            Text('Last name'.tr,
                               style: TextStyle(
                                 color: Color(0xFF94A3B8),
                                 fontSize: 11,
@@ -196,8 +191,7 @@ class _EditNamePageState extends State<EditNamePage> {
                       const SizedBox(height: 14),
                       Padding(
                         padding: EdgeInsets.only(left: 4),
-                        child: Text(
-                          'Max length: 20 characters',
+                        child: Text('Max length: 20 characters'.tr,
                           style: TextStyle(
                             color: _subtitleColor,
                             fontSize: 11,

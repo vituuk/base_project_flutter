@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../widgets/support_chat_page.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../../../core/constants/setting/security/security_constants.dart';
 import '../../../core/constants/setting/privacy_constants.dart';
 
 class SettingController extends GetxController {
   late final ProfileController profileController;
+
+  final currentLanguage = 'English'.obs;
 
   @override
   void onInit() {
@@ -16,6 +21,12 @@ class SettingController extends GetxController {
     } catch (_) {
       // Fallback in case ProfileController is not registered yet
       profileController = Get.put(ProfileController());
+    }
+    // Initialize currentLanguage
+    if (Get.locale?.languageCode == 'km') {
+      currentLanguage.value = 'Khmer (ភាសាខ្មែរ)';
+    } else {
+      currentLanguage.value = 'English';
     }
   }
 
@@ -34,6 +45,74 @@ class SettingController extends GetxController {
 
   void setThemeMode(String mode) {
     profileController.setThemeMode(mode);
+  }
+
+  void showLanguageDialog(BuildContext context) {
+    final isDarkMode = Get.isDarkMode;
+    final textColor = isDarkMode ? Colors.white : const Color(0xFF111827);
+
+    Get.dialog(
+      Obx(() => AlertDialog(
+            backgroundColor: isDarkMode ? const Color(0xFF1E293B) : Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text(
+              'Select Language'.tr,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  title: Text('English', style: TextStyle(color: textColor)),
+                  trailing: currentLanguage.value == 'English'
+                      ? const Icon(Icons.check_circle, color: Color(0xFF2046E8))
+                      : null,
+                  onTap: () {
+                    setLanguage('en');
+                    Get.back();
+                  },
+                ),
+                ListTile(
+                  title: Text('Khmer (ភាសាខ្មែរ)', style: TextStyle(color: textColor)),
+                  trailing: currentLanguage.value == 'Khmer (ភាសាខ្មែរ)'
+                      ? const Icon(Icons.check_circle, color: Color(0xFF2046E8))
+                      : null,
+                  onTap: () {
+                    setLanguage('km');
+                    Get.back();
+                  },
+                ),
+                ListTile(
+                  title: Text('Korean (한국어)', style: TextStyle(color: textColor)),
+                  trailing: currentLanguage.value == 'Korean (한국어)'
+                      ? const Icon(Icons.check_circle, color: Color(0xFF2046E8))
+                      : null,
+                  onTap: () {
+                    setLanguage('ko');
+                    Get.back();
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+
+  void setLanguage(String languageCode) {
+    if (languageCode == 'km') {
+      currentLanguage.value = 'Khmer (ភាសាខ្មែរ)';
+      Get.updateLocale(const Locale('km', 'KH'));
+    } else if (languageCode == 'ko') {
+      currentLanguage.value = 'Korean (한국어)';
+      Get.updateLocale(const Locale('ko', 'KR'));
+    } else {
+      currentLanguage.value = 'English';
+      Get.updateLocale(const Locale('en', 'US'));
+    }
   }
 }
 
@@ -222,9 +301,8 @@ class NotificationsController extends GetxController {
   final ringtoneOptions = const [
     'Horizon Breeze (Default)',
     'Silent',
-    'Comet',
-    'Beep-Beep',
-    'Chime Time',
+    'Hip Hop',
+    'Free Style',
   ];
 
   void toggleMessageNotifications(bool val) => messageNotifications.value = val;
@@ -235,8 +313,123 @@ class NotificationsController extends GetxController {
   void toggleInAppVibrate(bool val) => inAppVibrate.value = val;
   void toggleVibrateWhenRinging(bool val) => vibrateWhenRinging.value = val;
 
+  final isRingtonePermissionGranted = false.obs;
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  final _ringtoneAssets = const {
+    'Horizon Breeze (Default)': 'sounds/breeze.wav',
+    'Hip Hop': 'sounds/beat1.mp3',
+    'Free Style': 'sounds/freestyle.mp3',
+  };
+
   void setRingtone(String ringtone) {
-    selectedRingtone.value = ringtone;
+    if (ringtone == 'Silent') {
+      selectedRingtone.value = ringtone;
+      _stopSound();
+      return;
+    }
+
+    if (isRingtonePermissionGranted.value) {
+      selectedRingtone.value = ringtone;
+      _playSound(ringtone);
+    } else {
+      _showPermissionDialog(ringtone);
+    }
+  }
+
+  void _playSound(String ringtone) async {
+    final assetPath = _ringtoneAssets[ringtone];
+    if (assetPath != null) {
+      try {
+        await _audioPlayer.stop();
+        await _audioPlayer.play(AssetSource(assetPath));
+      } catch (e) {
+        debugPrint('Error playing ringtone: $e');
+      }
+    }
+  }
+
+  void _stopSound() async {
+    try {
+      await _audioPlayer.stop();
+    } catch (e) {
+      debugPrint('Error stopping ringtone: $e');
+    }
+  }
+
+  void _showPermissionDialog(String ringtone) {
+    final isDarkMode = Get.isDarkMode;
+    final textColor = isDarkMode ? Colors.white : const Color(0xFF111827);
+    final subtitleColor = isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: isDarkMode ? const Color(0xFF1E293B) : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          'Ringtone Permission',
+          style: TextStyle(
+            color: textColor,
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          'To set this sound, the app needs permission to access system audio settings and configure notification alerts.',
+          style: TextStyle(
+            color: subtitleColor,
+            fontSize: 14,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+              Get.snackbar(
+                'Permission Denied',
+                'Unable to set ringtone without permission.',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: const Color(0xFFEF4444),
+                colorText: Colors.white,
+                margin: const EdgeInsets.all(16),
+                borderRadius: 12,
+              );
+            },
+            child: const Text('Don\'t Allow', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
+          ),
+          TextButton(
+            onPressed: () {
+              isRingtonePermissionGranted.value = true;
+              selectedRingtone.value = ringtone;
+              Get.back();
+              _playSound(ringtone);
+              Get.snackbar(
+                'Permission Granted',
+                'Ringtone set to $ringtone successfully.',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+                margin: const EdgeInsets.all(16),
+                borderRadius: 12,
+              );
+            },
+            child: const Text(
+              'Allow',
+              style: TextStyle(
+                color: Color(0xFF2046E8),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void onClose() {
+    _audioPlayer.dispose();
+    super.onClose();
   }
 }
 
@@ -253,38 +446,47 @@ class HelpCenterController extends GetxController {}
 
 class ContactUsController extends GetxController {
   void startLiveChat() {
-    Get.snackbar(
-      'Live Chat',
-      'Connecting to support representative...',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF2563EB),
-      colorText: Colors.white,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-    );
+    Get.to(() => const SupportChatPage());
   }
 
-  void sendEmail() {
-    Get.snackbar(
-      'Email Support',
-      'Opening email composer...',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF2563EB),
-      colorText: Colors.white,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
+  void sendEmail() async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'support@example.com',
+      query: 'subject=App%20Support%20Request',
     );
+    try {
+      final launched = await launchUrl(emailLaunchUri);
+      if (!launched) {
+        Get.snackbar(
+          'Notice',
+          'No email app found. Are you on an emulator?',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: const Color(0xFFF59E0B),
+          colorText: Colors.white,
+          margin: const EdgeInsets.all(16),
+          borderRadius: 12,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Notice',
+        'No email app configured. Please install an email app.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: const Color(0xFFF59E0B),
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+      );
+    }
   }
 
   void giveFeedback() {
-    Get.snackbar(
-      'Feedback',
-      'Thank you for your feedback! Opening feedback form...',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF2563EB),
-      colorText: Colors.white,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
+    Get.bottomSheet(
+      const _FeedbackBottomSheet(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      ignoreSafeArea: false,
     );
   }
 }
@@ -433,3 +635,149 @@ class AddAccountController extends GetxController {
     super.onClose();
   }
 }
+
+// ── Feedback Bottom Sheet ──────────────────────────────────────────────────
+class _FeedbackBottomSheet extends StatefulWidget {
+  const _FeedbackBottomSheet();
+
+  @override
+  State<_FeedbackBottomSheet> createState() => _FeedbackBottomSheetState();
+}
+
+class _FeedbackBottomSheetState extends State<_FeedbackBottomSheet> {
+  final TextEditingController _feedbackController = TextEditingController();
+  int _rating = 0;
+
+  @override
+  void dispose() {
+    _feedbackController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF111827);
+    final subtitleColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+    final primary = const Color(0xFF2046E8);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 14,
+          bottom: 20,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+        children: [
+          // Handle bar
+          Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          Text(
+            'Give Feedback'.tr,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: textColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Help us improve by sharing your thoughts and suggestions.'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14, color: subtitleColor),
+          ),
+          const SizedBox(height: 24),
+          // Star Rating
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(5, (index) {
+              return IconButton(
+                icon: Icon(
+                  index < _rating ? Icons.star_rounded : Icons.star_outline_rounded,
+                  color: index < _rating ? const Color(0xFFF59E0B) : subtitleColor,
+                  size: 32,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _rating = index + 1;
+                  });
+                },
+              );
+            }),
+          ),
+          const SizedBox(height: 16),
+          // Text Input
+          Container(
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+              ),
+            ),
+            child: TextField(
+              controller: _feedbackController,
+              maxLines: 4,
+              style: TextStyle(color: textColor, fontSize: 15),
+              decoration: InputDecoration(
+                hintText: 'Type your feedback here...',
+                hintStyle: TextStyle(color: subtitleColor, fontSize: 14),
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.all(16),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          // Submit Button
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.back();
+                Get.snackbar(
+                  'Success',
+                  'Thank you for your feedback!',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white,
+                  margin: const EdgeInsets.all(16),
+                  borderRadius: 12,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primary,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 0,
+              ),
+              child: const Text(
+                'Submit Feedback',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ],
+      ),
+      ),
+    );
+  }
+}
+

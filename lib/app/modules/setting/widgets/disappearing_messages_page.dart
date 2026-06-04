@@ -25,8 +25,7 @@ class DisappearingMessagesPage extends GetView<DisappearingMessagesController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Disappearing Messages',
+        title: Text('Disappearing Messages'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -65,8 +64,7 @@ class DisappearingMessagesPage extends GetView<DisappearingMessagesController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'DISAPPEARING MESSAGES',
+                            Text('DISAPPEARING MESSAGES'.tr,
                               style: TextStyle(
                                 color: isDarkMode ? const Color(0xFF64748B) : const Color(0xFF475569),
                                 fontSize: 12,
@@ -75,8 +73,7 @@ class DisappearingMessagesPage extends GetView<DisappearingMessagesController> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Self-Destruct Timer',
+                            Text('Self-Destruct Timer'.tr,
                               style: TextStyle(
                                 color: AppColors.subtitle,
                                 fontSize: 12,
@@ -125,8 +122,7 @@ class DisappearingMessagesPage extends GetView<DisappearingMessagesController> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           child: Row(
             children: [
-              Text(
-                option,
+              Text(option.tr,
                 style: TextStyle(
                   color: AppColors.text,
                   fontSize: 15,

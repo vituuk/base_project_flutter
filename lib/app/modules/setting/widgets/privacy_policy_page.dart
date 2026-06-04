@@ -25,12 +25,12 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
         ),
         titleSpacing: 0,
         title: Text(
-          'Privacy Policy',
+          'Privacy Policy'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
             fontWeight: FontWeight.w600,
-          ),
+          ).khmer,
         ),
       ),
       body: SafeArea(
@@ -41,8 +41,9 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
               // ── CARD 1: INTRODUCTION ────────────────────────────────────────
               _buildStandardCard(
                 icon: Icons.shield_outlined,
-                title: 'INTRODUCTION',
-                description: 'Your privacy is important to us. This policy explains how we collect, use, and protect your data.',
+                title: 'INTRODUCTION'.tr,
+                description: 'Your privacy is important to us. This policy explains how we collect, use, and protect your data.'.tr,
+                isDarkMode: isDarkMode,
               ),
 
               const SizedBox(height: 16),
@@ -50,8 +51,9 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
               // ── CARD 2: DATA COLLECTION ────────────────────────────────────
               _buildStandardCard(
                 icon: Icons.storage_rounded,
-                title: 'DATA COLLECTION',
-                description: 'We collect information you provide directly to us, such as your profile information and messages.',
+                title: 'DATA COLLECTION'.tr,
+                description: 'We collect information you provide directly to us, such as your profile information and messages.'.tr,
+                isDarkMode: isDarkMode,
               ),
 
               const SizedBox(height: 16),
@@ -59,8 +61,9 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
               // ── CARD 3: DATA USAGE ──────────────────────────────────────────
               _buildStandardCard(
                 icon: Icons.settings_outlined,
-                title: 'DATA USAGE',
-                description: 'We use your data to provide and improve our services, communicate with you, and ensure security.',
+                title: 'DATA USAGE'.tr,
+                description: 'We use your data to provide and improve our services, communicate with you, and ensure security.'.tr,
+                isDarkMode: isDarkMode,
               ),
 
               const SizedBox(height: 16),
@@ -68,14 +71,15 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
               // ── CARD 4: DATA PROTECTION ────────────────────────────────────
               _buildStandardCard(
                 icon: Icons.lock_outline_rounded,
-                title: 'DATA PROTECTION',
-                description: 'Your messages are secured with industry-standard encryption. We prioritize your digital safety above all.',
+                title: 'DATA PROTECTION'.tr,
+                description: 'Your messages are secured with industry-standard encryption. We prioritize your digital safety above all.'.tr,
+                isDarkMode: isDarkMode,
               ),
 
               const SizedBox(height: 16),
 
               // ── CARD 5: YOUR RIGHTS (SOLID BLUE CARD) ───────────────────────
-              _buildBlueCard(),
+              _buildBlueCard(isDarkMode: isDarkMode),
             ],
           ),
         ),
@@ -88,6 +92,7 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
     required IconData icon,
     required String title,
     required String description,
+    required bool isDarkMode,
   }) {
     return Container(
       width: double.infinity,
@@ -110,29 +115,29 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
             children: [
               Icon(
                 icon,
-                color: const Color(0xFF2563EB),
+                color: isDarkMode ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                 size: 20,
               ),
               const SizedBox(width: 10),
               Text(
                 title,
-                style: const TextStyle(
-                  color: Color(0xFF2563EB),
+                style: TextStyle(
+                  color: isDarkMode ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
-                ),
+                ).khmer,
               ),
             ],
           ),
           const SizedBox(height: 12),
           Text(
             description,
-            style: const TextStyle(
-              color: Color(0xFF475569),
+            style: TextStyle(
+              color: isDarkMode ? const Color(0xFFE2E8F0) : const Color(0xFF475569),
               fontSize: 14.5,
               height: 1.45,
-            ),
+            ).khmer,
           ),
         ],
       ),
@@ -140,12 +145,12 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
   }
 
   // ── SOLID BLUE CARD BUILDER ─────────────────────────────────────────────────
-  Widget _buildBlueCard() {
+  Widget _buildBlueCard({required bool isDarkMode}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF2563EB),
+        color: isDarkMode ? const Color(0xFF1E3A8A) : const Color(0xFF2563EB),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -155,36 +160,36 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
           ),
         ],
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.person_outline_rounded,
                 color: Colors.white,
                 size: 20,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(
-                'YOUR RIGHTS',
+                'YOUR RIGHTS'.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
-                ),
+                ).khmer,
               ),
             ],
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
-            'You have the right to access, update, or delete your personal information at any time. Manage your preferences in settings.',
+            'You have the right to access, update, or delete your personal information at any time. Manage your preferences in settings.'.tr,
             style: TextStyle(
               color: Colors.white,
               fontSize: 14.5,
               height: 1.45,
-            ),
+            ).khmer,
           ),
         ],
       ),

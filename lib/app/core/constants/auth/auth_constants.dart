@@ -1,97 +1,42 @@
- class AuthConstants {
+import 'package:get/get.dart';
+
+class AuthConstants {
   const AuthConstants._();
- 
-  static const String defaultUserName = 'Adrian Smith';
 
-  
-  static const String welcomeLoginLabel = 'Successful login';
-
- 
-  static const String welcomeHeading = 'Welcome\nBack';
- 
-  static const String welcomeDescription =
+  static String get defaultUserName => 'Adrian Smith'.tr;
+  static String get welcomeLoginLabel => 'Successful login'.tr;
+  static String get welcomeHeading => 'Welcome\nBack'.tr;
+  static String get welcomeDescription =>
       "It's great to see you again. We've missed having you around. "
-      "Everything is ready for you to pick up where you left off.";
-
-  
-  static const String continueLabel = 'Continue';
-
-  
+      "Everything is ready for you to pick up where you left off.".tr;
+  static String get continueLabel => 'Continue'.tr;
+  static String get loginSubtitle => 'Sign in to continue your conversations'.tr;
+  static String get loginHeading => 'Enter your Number'.tr;
+  static String get loginCardSubtitle =>
+      'Enter your mobile number to receive\na verification code'.tr;
+  static String get loginPhoneLabel => 'Phone Number'.tr;
+  static String get loginPhoneHint => 'Mobile number'.tr;
+  static String get loginVerifyButton => 'Verify Code'.tr;
+  static String get loginHelpCenter => 'Help Center'.tr;
+  static String get privacyPolicy => 'Privacy Policy'.tr;
+  static String get termsOfService => 'Terms of Service'.tr;
   static const int welcomeAnimDurationMs = 900;
- 
-  static const String loginSubtitle = 'Sign in to continue your conversations';
-
- 
-  static const String loginHeading = 'Enter your Number';
-
- 
-  static const String loginCardSubtitle =
-      'Enter your mobile number to receive\na verification code';
-
-  
-  static const String loginPhoneLabel = 'Phone Number';
-
- 
-  static const String loginPhoneHint = 'Mobile number';
-
-   
-  static const String loginVerifyButton = 'Verify Code';
-
- 
-  static const String loginHelpCenter = 'Help Center';
-
- 
-  static const String privacyPolicy = 'Privacy Policy';
- 
-  static const String termsOfService = 'Terms of Service';
-
- 
   static const String defaultDialCode = '+855';
-
- 
   static const String defaultFlagEmoji = '🇰🇭';
-
- 
-  static const String verificationTitle = 'Verification';
-
- 
-  static const String verificationHeading = 'Verify Code';
- 
-  static const String verificationButton = 'Verify & Continue';
-
- 
-  static const String verificationResendPrompt = "Didn't receive the code?";
-
- 
-  static const String verificationResendButton = 'Resend Code';
- 
-  static const String verificationBackTo = 'Back to ';
-
- 
-  static const String verificationSignIn = 'Sign in';
-
- 
+  static String get verificationTitle => 'Verification'.tr;
+  static String get verificationHeading => 'Verify Code'.tr;
+  static String get verificationButton => 'Verify & Continue'.tr;
+  static String get verificationResendPrompt => "Didn't receive the code?".tr;
+  static String get verificationResendButton => 'Resend Code'.tr;
+  static String get verificationBackTo => 'Back to '.tr;
+  static String get verificationSignIn => 'Sign in'.tr;
   static const int otpLength = 6;
-
-   
   static const int otpResendSeconds = 40;
-
- 
-  static const String fallbackPhoneNumber = '+1 (555) 000-0000';
-
- 
-  static const String setupProfileTitle = 'Set Up Profile';
- 
-  static const String setupProfileHeading = 'Set up Profile';
- 
-  static const String setupProfileSubtitle = 'enter your name';
-
- 
-  static const String setupFirstNameLabel = 'First Name';
-
- 
-  static const String setupLastNameLabel = 'Last Name';
-
- 
-  static const String setupNameHint = 'Enter your name';
+  static String get fallbackPhoneNumber => '+1 (555) 000-0000'.tr;
+  static String get setupProfileTitle => 'Set Up Profile'.tr;
+  static String get setupProfileHeading => 'Set up Profile'.tr;
+  static String get setupProfileSubtitle => 'enter your name'.tr;
+  static String get setupFirstNameLabel => 'First Name'.tr;
+  static String get setupLastNameLabel => 'Last Name'.tr;
+  static String get setupNameHint => 'Enter your name'.tr;
 }

@@ -35,8 +35,7 @@ class EditInfoPage extends GetView<EditInfoController> {
           ),
         ),
         titleSpacing: 8,
-        title: Text(
-          'Edit Information',
+        title: Text('Edit Information'.tr,
           style: TextStyle(
             color: _primary,
             fontSize: 18,
@@ -51,8 +50,7 @@ class EditInfoPage extends GetView<EditInfoController> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 4, bottom: 8),
-              child: Text(
-                'YOUR INFO',
+              child: Text('Your Info'.tr,
                 style: TextStyle(
                   color: Color(0xFF94A3B8),
                   fontSize: 12,
@@ -70,7 +68,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                         context: context,
                         icon: Icons.badge_outlined,
                         title: controller.userName.value,
-                        subtitle: 'Your name',
+                        subtitle: 'Your Name'.tr,
                         onTap: () => Get.toNamed(AppRoutes.editName),
                       )),
                   Divider(height: 1, thickness: 0.5, color: AppColors.divider, indent: 52),
@@ -78,7 +76,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                         context: context,
                         icon: Icons.phone_outlined,
                         title: controller.mobile.value,
-                        subtitle: 'Tap to change phone number',
+                        subtitle: 'Tap to change phone number'.tr.tr,
                         onTap: () => Get.toNamed(AppRoutes.changeNumber),
                       )),
                   Divider(height: 1, thickness: 0.5, color: AppColors.divider, indent: 52),
@@ -86,7 +84,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                         context: context,
                         icon: Icons.alternate_email_rounded,
                         title: controller.username.value,
-                        subtitle: 'Username',
+                        subtitle: 'User Name'.tr,
                         onTap: () => Get.toNamed(AppRoutes.editUsername),
                       )),
                   Divider(height: 1, thickness: 0.5, color: AppColors.divider, indent: 52),
@@ -94,7 +92,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                         context: context,
                         icon: Icons.cake_outlined,
                         title: controller.birthday.value,
-                        subtitle: 'Birthday',
+                        subtitle: 'Birthday'.tr.tr,
                         onTap: () => _showBirthdayPicker(context),
                       )),
                 ],
@@ -104,8 +102,7 @@ class EditInfoPage extends GetView<EditInfoController> {
 
             Padding(
               padding: EdgeInsets.only(left: 4, bottom: 8),
-              child: Text(
-                'YOUR BIO',
+              child: Text('Your Bio'.tr,
                 style: TextStyle(
                   color: Color(0xFF94A3B8),
                   fontSize: 12,
@@ -121,7 +118,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                     context: context,
                     icon: Icons.notes_rounded,
                     title: controller.bio.value.isEmpty ? 'Write about yourself...' : controller.bio.value,
-                    subtitle: 'Bio',
+                    subtitle: 'Bio'.tr.tr.tr,
                     onTap: () => Get.toNamed(AppRoutes.editBio),
                   )),
             ),
@@ -237,8 +234,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                'Birthday',
+              Text('Birthday'.tr,
                 style: TextStyle(
                   color: AppColors.text,
                   fontSize: 18,
@@ -290,8 +286,7 @@ class EditInfoPage extends GetView<EditInfoController> {
                       ),
                       elevation: 0,
                     ),
-                    child: Text(
-                      'Confirm',
+                    child: Text('Confirm'.tr,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,

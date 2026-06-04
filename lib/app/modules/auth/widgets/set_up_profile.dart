@@ -43,8 +43,7 @@ class _SetUpProfilePageState extends State<SetUpProfilePage> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: const Text(
-          AuthConstants.setupProfileTitle,
+        title: Text(AuthConstants.setupProfileTitle,
           style: TextStyle(
             color: darkText,
             fontSize: 17,
@@ -126,6 +125,7 @@ class _SetUpProfilePageState extends State<SetUpProfilePage> {
                             AuthConstants.setupProfileSubtitle,
                             style: TextStyle(
                               fontFamily: AppTheme.fontFamilyNunito,
+                              fontFamilyFallback: AppTheme.fontFamilyFallbackKhmer,
                               fontSize: 13,
                               color: subtitleColor,
                               fontWeight: FontWeight.w400,
@@ -209,8 +209,7 @@ class _SetUpProfilePageState extends State<SetUpProfilePage> {
                                                 Colors.white),
                                       ),
                                     )
-                                  : const Text(
-                                      AuthConstants.continueLabel,
+                                  : Text(AuthConstants.continueLabel,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,

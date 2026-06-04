@@ -25,12 +25,12 @@ class ContactUsPage extends GetView<ContactUsController> {
         ),
         titleSpacing: 0,
         title: Text(
-          'Contact Us',
+          'Contact Us'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
             fontWeight: FontWeight.w600,
-          ),
+          ).khmer,
         ),
       ),
       body: SafeArea(
@@ -48,9 +48,9 @@ class ContactUsPage extends GetView<ContactUsController> {
                 context: context,
                 isDarkMode: isDarkMode,
                 icon: Icons.mail_outline_rounded,
-                title: 'Email Support',
-                description: 'Response time: < 24h. Perfect for detailed inquiries.',
-                buttonText: 'Send Email',
+                title: 'Email Support'.tr,
+                description: 'Response time: < 24h. Perfect for detailed inquiries.'.tr,
+                buttonText: 'Send Email'.tr,
                 onButtonTap: () => controller.sendEmail(),
               ),
 
@@ -61,9 +61,9 @@ class ContactUsPage extends GetView<ContactUsController> {
                 context: context,
                 isDarkMode: isDarkMode,
                 icon: Icons.rate_review_outlined,
-                title: 'Send Feedback',
-                description: 'Help us improve by sharing your thoughts and suggestions.',
-                buttonText: 'Give Feedback',
+                title: 'Send Feedback'.tr,
+                description: 'Help us improve by sharing your thoughts and suggestions.'.tr,
+                buttonText: 'Give Feedback'.tr,
                 onButtonTap: () => controller.giveFeedback(),
               ),
             ],
@@ -129,12 +129,12 @@ class ContactUsPage extends GetView<ContactUsController> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'Online',
+                      'Online'.tr,
                       style: TextStyle(
                         color: isDarkMode ? const Color(0xFF4ADE80) : const Color(0xFF15803D),
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                      ),
+                      ).khmer,
                     ),
                   ],
                 ),
@@ -143,21 +143,21 @@ class ContactUsPage extends GetView<ContactUsController> {
           ),
           const SizedBox(height: 16),
           Text(
-            'Live Chat',
+            'Live Chat'.tr,
             style: TextStyle(
               color: AppColors.text,
               fontSize: 22,
               fontWeight: FontWeight.w700,
-            ),
+            ).khmer,
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Chat with our experts instantly for immediate assistance.',
+          Text(
+            'Chat with our experts instantly for immediate assistance.'.tr,
             style: TextStyle(
-              color: Color(0xFF64748B),
+              color: isDarkMode ? const Color(0xFFE2E8F0) : const Color(0xFF64748B),
               fontSize: 14.5,
               height: 1.4,
-            ),
+            ).khmer,
           ),
           const SizedBox(height: 20),
           // Start Chat Button (Solid Blue)
@@ -174,12 +174,12 @@ class ContactUsPage extends GetView<ContactUsController> {
                 ),
               ),
               onPressed: () => controller.startLiveChat(),
-              child: const Text(
-                'Start Chat',
+              child: Text(
+                'Start Chat'.tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                ),
+                ).khmer,
               ),
             ),
           ),
@@ -236,16 +236,16 @@ class ContactUsPage extends GetView<ContactUsController> {
               color: AppColors.text,
               fontSize: 22,
               fontWeight: FontWeight.w700,
-            ),
+            ).khmer,
           ),
           const SizedBox(height: 8),
           Text(
             description,
-            style: const TextStyle(
-              color: Color(0xFF64748B),
+            style: TextStyle(
+              color: isDarkMode ? const Color(0xFFE2E8F0) : const Color(0xFF64748B),
               fontSize: 14.5,
               height: 1.4,
-            ),
+            ).khmer,
           ),
           const SizedBox(height: 20),
           // Outline button
@@ -263,10 +263,10 @@ class ContactUsPage extends GetView<ContactUsController> {
               onPressed: onButtonTap,
               child: Text(
                 buttonText,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                ),
+                ).khmer,
               ),
             ),
           ),

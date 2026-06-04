@@ -24,8 +24,7 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Devices',
+        title: Text('Devices'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -40,7 +39,7 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ── CURRENT DEVICE SECTION ─────────────────────────────────────
-              _buildSectionHeader('CURRENT DEVICE'),
+              _buildSectionHeader('CURRENT DEVICE'.tr),
               _buildCardContainer([
                 _buildCurrentDeviceItem(controller.currentDevice, isDarkMode),
               ]),
@@ -56,7 +55,7 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSectionHeader('LINKED DEVICES'),
+                    _buildSectionHeader('LINKED DEVICES'.tr),
                     _buildCardContainer([
                       ListView.separated(
                         shrinkWrap: true,
@@ -222,8 +221,7 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
                   ),
                 ),
                 const SizedBox(height: 3),
-                Text(
-                  '${device.location}  •  ${device.statusText}',
+                Text('${device.location}  •  ${device.statusText}'.tr,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -261,19 +259,18 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
           border: Border.all(color: const Color(0xFFFCA5A5), width: 1.0),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Terminate',
-              style: TextStyle(
+            Text('Terminate'.tr,
+              style: const TextStyle(
                 color: Color(0xFFEF4444),
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(width: 4),
-            Icon(
+            const SizedBox(width: 4),
+            const Icon(
               Icons.back_hand_rounded,
               color: Color(0xFFEF4444),
               size: 12,
@@ -303,19 +300,18 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
             top: BorderSide(color: Color(0xFFFCA5A5), width: 1.0),
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Terminate All these Sessions',
-              style: TextStyle(
+            Text('Terminate All these Sessions'.tr,
+              style: const TextStyle(
                 color: Color(0xFFEF4444),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(width: 8),
-            Icon(
+            const SizedBox(width: 8),
+            const Icon(
               Icons.back_hand_rounded,
               color: Color(0xFFEF4444),
               size: 16,
@@ -380,8 +376,7 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  'Are you sure?',
+                Text('Are you sure?'.tr,
                   style: TextStyle(
                     color: isDarkModeDialog ? Colors.white : const Color(0xFF111827),
                     fontSize: 20,
@@ -412,9 +407,8 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
                         onPressed: () => Get.back(),
-                        child: const Text(
-                          'No',
-                          style: TextStyle(
+                        child: Text('No'.tr,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),
@@ -437,9 +431,8 @@ class DevicesSecurityPage extends GetView<DevicesSecurityController> {
                           Get.back();
                           onConfirm();
                         },
-                        child: const Text(
-                          'Yes',
-                          style: TextStyle(
+                        child: Text('Yes'.tr,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),

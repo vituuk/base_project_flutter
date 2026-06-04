@@ -6,7 +6,8 @@ import '../../../core/constants/setting/setting_constants.dart';
 import '../../../core/theme/theme_controller.dart';
 import '../../../core/theme/theme_extensions.dart';
 import '../../../routes/app_routes.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../setting/controllers/setting_controller.dart';
+import '../../shell/controllers/shell_controller.dart';
 import '../controllers/home_controller.dart';
 
 class ChatPage extends GetView<ChatController> {
@@ -71,7 +72,7 @@ class ChatPage extends GetView<ChatController> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Messages',
+                  'Messages'.tr,
                   style: TextStyle(
                     color: _primary,
                     fontSize: 22,
@@ -87,7 +88,13 @@ class ChatPage extends GetView<ChatController> {
           // Add contact icon
           _AppBarIconButton(
             svgPath: 'assets/icons/add-contact.svg',
-            onTap: () => Get.toNamed(AppRoutes.contact),
+            onTap: () {
+              if (Get.isRegistered<ShellController>()) {
+                Get.find<ShellController>().changePage(1);
+              } else {
+                Get.toNamed(AppRoutes.contact);
+              }
+            },
           ),
           const SizedBox(width: 4),
           // More options popup
@@ -149,7 +156,7 @@ class ChatPage extends GetView<ChatController> {
       if (messages.isEmpty) {
         return Center(
           child: Text(
-            'No conversations found',
+            'No conversations found'.tr,
             style: TextStyle(color: _subtitleColor, fontSize: 14),
           ),
         );
@@ -178,6 +185,7 @@ class ChatPage extends GetView<ChatController> {
     final dividerColor =
         isDark ? const Color(0xFF334155) : const Color(0xFFE8ECF5);
     const Color primary = Color(0xFF2046E8);
+    final currentLang = Get.locale?.languageCode ?? 'en';
 
     return PopupMenuButton<String>(
       offset: const Offset(0, 44),
@@ -213,27 +221,34 @@ class ChatPage extends GetView<ChatController> {
       onSelected: (value) {
         switch (value) {
           case 'day_mode':
-            if (Get.isRegistered<ProfileController>()) {
-              Get.find<ProfileController>().setThemeMode('Day Mode');
+            if (Get.isRegistered<ThemeController>()) {
+              Get.find<ThemeController>().changeThemeWithAnimation(ThemeMode.light, Offset.zero);
             } else {
               Get.changeThemeMode(ThemeMode.light);
-              if (Get.isRegistered<ThemeController>()) {
-                Get.find<ThemeController>().setLight();
-              }
             }
             break;
           case 'night_mode':
-            if (Get.isRegistered<ProfileController>()) {
-              Get.find<ProfileController>().setThemeMode('Night Mode');
+            if (Get.isRegistered<ThemeController>()) {
+              Get.find<ThemeController>().changeThemeWithAnimation(ThemeMode.dark, Offset.zero);
             } else {
               Get.changeThemeMode(ThemeMode.dark);
-              if (Get.isRegistered<ThemeController>()) {
-                Get.find<ThemeController>().setDark();
-              }
+            }
+            break;
+          case 'lang_select':
+            Get.back(); // close the popup menu
+            if (Get.isRegistered<SettingController>()) {
+              Get.find<SettingController>().showLanguageDialog(context);
+            } else {
+              final controller = Get.put(SettingController());
+              controller.showLanguageDialog(context);
             }
             break;
           case 'new_group':
-            Get.toNamed(AppRoutes.contact);
+            if (Get.isRegistered<ShellController>()) {
+              Get.find<ShellController>().changePage(1);
+            } else {
+              Get.toNamed(AppRoutes.contact);
+            }
             break;
           case 'settings':
             Get.offAllNamed(AppRoutes.setting);
@@ -246,7 +261,7 @@ class ChatPage extends GetView<ChatController> {
           enabled: false,
           height: 30,
           child: Text(
-            'THEME',
+            'THEME'.tr,
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w700,
@@ -318,6 +333,54 @@ class ChatPage extends GetView<ChatController> {
           child: Divider(height: 1, thickness: 0.5, color: dividerColor),
         ),
 
+        // ── Section label ────────────────────────────────────────────────
+        PopupMenuItem<String>(
+          enabled: false,
+          height: 30,
+          child: Text(
+            'LANGUAGE'.tr,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.8,
+              color: subtitleColor,
+            ),
+          ),
+        ),
+        // Language Selection Option
+        PopupMenuItem<String>(
+          value: 'lang_select',
+          height: 44,
+          child: Row(
+            children: [
+              Icon(
+                Icons.language_rounded,
+                size: 18,
+                color: primary,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                currentLang == 'km' ? 'Khmer'.tr : (currentLang == 'ko' ? 'Korean'.tr : 'English'.tr),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: primary,
+                ),
+              ),
+              const Spacer(),
+              Icon(Icons.arrow_drop_down_rounded, size: 22, color: primary),
+            ],
+          ),
+        ),
+
+        // ── Divider ──────────────────────────────────────────────────────
+        PopupMenuItem<String>(
+          enabled: false,
+          height: 1,
+          padding: EdgeInsets.zero,
+          child: Divider(height: 1, thickness: 0.5, color: dividerColor),
+        ),
+
         // ── Actions ──────────────────────────────────────────────────────
         PopupMenuItem<String>(
           value: 'new_group',
@@ -327,7 +390,7 @@ class ChatPage extends GetView<ChatController> {
               Icon(Icons.group_add_outlined, size: 18, color: subtitleColor),
               const SizedBox(width: 12),
               Text(
-                'New Group',
+                'New Group'.tr,
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -344,7 +407,7 @@ class ChatPage extends GetView<ChatController> {
               Icon(Icons.settings_outlined, size: 18, color: subtitleColor),
               const SizedBox(width: 12),
               Text(
-                'Settings',
+                'Settings'.tr,
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

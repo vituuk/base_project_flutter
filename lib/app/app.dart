@@ -5,6 +5,8 @@ import 'bindings/initial_binding.dart';
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'core/theme/theme_reveal_wrapper.dart';
+import 'core/translations/app_translations.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
 
@@ -23,6 +25,12 @@ class DemoApp extends StatelessWidget {
       initialBinding: InitialBinding(),
       initialRoute: AppRoutes.login,
       getPages: AppPages.pages,
+      translations: AppTranslations(),
+      locale: const Locale('en', 'US'),
+      fallbackLocale: const Locale('en', 'US'),
+      builder: (context, child) {
+        return ThemeRevealWrapper(child: child!);
+      },
     );
   }
 }

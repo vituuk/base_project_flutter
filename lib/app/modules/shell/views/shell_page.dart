@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/theme_controller.dart';
 import '../../../core/theme/theme_extensions.dart';
 import '../../home/widgets/chat_page.dart';
@@ -112,11 +113,12 @@ class _NavItem extends StatelessWidget {
   final VoidCallback onTap;
 
   static const Color _primary = Color(0xFF2046E8);
-  static const Color _inactive = Color(0xFF9CA3AF);
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? _primary : _inactive;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final inactiveColor = isDarkMode ? Colors.white : Colors.black;
+    final color = isActive ? _primary : inactiveColor;
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -142,8 +144,9 @@ class _NavItem extends StatelessWidget {
                 color: color,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
                 fontFamily: 'Nunito',
+                fontFamilyFallback: AppTheme.fontFamilyFallbackKhmer,
               ),
-              child: Text(label),
+              child: Text(label.tr),
             ),
           ],
         ),

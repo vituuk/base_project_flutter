@@ -45,7 +45,7 @@ class ContactPage extends GetView<ContactController> {
         children: [
           Expanded(
             child: Text(
-              'Contacts',
+              'Contacts'.tr,
               style: TextStyle(
                 color: _primary,
                 fontSize: 22,
@@ -140,8 +140,8 @@ class ContactPage extends GetView<ContactController> {
         alignment: Alignment.centerLeft,
         child: Obx(() => Text(
               controller.sortByLastSeen.value
-                  ? 'Sorted by last seen time'
-                  : 'Sorted by name',
+                  ? 'Sorted by last seen time'.tr
+                  : 'Sorted by name'.tr,
               style: TextStyle(
                 color: _primary.withValues(alpha: 0.85),
                 fontSize: 13,
@@ -160,7 +160,7 @@ class ContactPage extends GetView<ContactController> {
         if (contacts.isEmpty) {
           return Center(
             child: Text(
-              'No contacts found',
+              'No contacts found'.tr,
               style: TextStyle(color: _subtitleColor, fontSize: 14),
             ),
           );
@@ -177,7 +177,7 @@ class ContactPage extends GetView<ContactController> {
         if (groups.isEmpty) {
           return Center(
             child: Text(
-              'No contacts found',
+              'No contacts found'.tr,
               style: TextStyle(color: _subtitleColor, fontSize: 14),
             ),
           );
@@ -260,7 +260,7 @@ class ContactPage extends GetView<ContactController> {
 
               // First Name Field
               Text(
-                'First name',
+                'First name'.tr,
                 style: TextStyle(
                   color: labelColor,
                   fontSize: 13,
@@ -289,7 +289,7 @@ class ContactPage extends GetView<ContactController> {
 
               // Last Name Field
               Text(
-                'Last name',
+                'Last name'.tr,
                 style: TextStyle(
                   color: labelColor,
                   fontSize: 13,
@@ -318,7 +318,7 @@ class ContactPage extends GetView<ContactController> {
 
               // Phone Number Field
               Text(
-                'Phone number',
+                'Phone number'.tr,
                 style: TextStyle(
                   color: labelColor,
                   fontSize: 13,
@@ -413,9 +413,9 @@ class ContactPage extends GetView<ContactController> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'Create Contact',
-                  style: TextStyle(
+                child: Text(
+                  'Create Contact'.tr,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -767,7 +767,7 @@ class _NavItem extends StatelessWidget {
             ),
             const SizedBox(height: 3),
             Text(
-              label,
+              label.tr,
               style: TextStyle(
                 fontSize: 11,
                 color: color,

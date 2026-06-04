@@ -67,8 +67,7 @@ class _EditUsernamePageState extends State<EditUsernamePage> {
           ),
         ),
         titleSpacing: 8,
-        title: Text(
-          'Username',
+        title: Text('Username'.tr,
           style: TextStyle(
             color: _primary,
             fontSize: 18,
@@ -108,8 +107,7 @@ class _EditUsernamePageState extends State<EditUsernamePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'USERNAME',
+                            Text('USERNAME'.tr,
                               style: TextStyle(
                                 color: _primary,
                                 fontSize: 13,
@@ -117,8 +115,7 @@ class _EditUsernamePageState extends State<EditUsernamePage> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Change username',
+                            Text('Change username'.tr,
                               style: TextStyle(
                                 color: _subtitleColor,
                                 fontSize: 12,
@@ -162,8 +159,7 @@ class _EditUsernamePageState extends State<EditUsernamePage> {
                       const SizedBox(height: 14),
                       Padding(
                         padding: EdgeInsets.only(left: 4),
-                        child: Text(
-                          'Max length: 20 characters',
+                        child: Text('Max length: 20 characters'.tr,
                           style: TextStyle(
                             color: _subtitleColor,
                             fontSize: 11,

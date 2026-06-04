@@ -43,9 +43,11 @@ class _MenuBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final inactiveColor = isDarkMode ? Colors.white : Colors.black;
     final color = isActive
         ? Theme.of(context).colorScheme.primary
-        : Theme.of(context).colorScheme.onSurfaceVariant;
+        : inactiveColor;
 
     return InkWell(
       onTap: onTap,

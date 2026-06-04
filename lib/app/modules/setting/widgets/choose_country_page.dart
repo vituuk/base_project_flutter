@@ -80,8 +80,7 @@ class _ChooseCountryPageState extends State<ChooseCountryPage> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Choose a country',
+        title: Text('Choose a country'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,

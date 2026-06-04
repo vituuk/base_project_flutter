@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/setting/setting_constants.dart';
 import '../../../core/theme/theme_controller.dart';
+import '../../../core/theme/theme_extensions.dart';
 import '../controllers/setting_controller.dart';
 
 class ThemePage extends StatelessWidget {
@@ -29,18 +30,17 @@ class ThemePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.chevron_left_rounded, color: isDarkMode ? Colors.white : _primary, size: 28),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: isDarkMode ? Colors.white : _primary, size: 18),
           onPressed: () => Get.back(),
         ),
-        title: Text(
-          'Theme',
+        titleSpacing: 0,
+        title: Text('Theme'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : _primary,
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+          ).khmer,
         ),
       ),
       body: SafeArea(
@@ -74,23 +74,21 @@ class ThemePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'THEME',
+                            Text('THEME'.tr,
                               style: TextStyle(
                                 color: isDarkMode ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 0.5,
-                              ),
+                              ).khmer,
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Switch mode',
+                            Text('Switch mode'.tr,
                               style: TextStyle(
                                 color: subtitleColor,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                              ),
+                              ).khmer,
                             ),
                           ],
                         ),
@@ -99,33 +97,48 @@ class ThemePage extends StatelessWidget {
                       // Day Mode Row
                       Obx(() {
                         final isSelected = controller.themeModeName.value == SettingConstants.themeModes[0];
-                        return InkWell(
-                          onTap: () => controller.setThemeMode(SettingConstants.themeModes[0]),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-                            child: Row(
-                              children: [
-                                Text(
-                                  SettingConstants.themeModes[0],
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                        Offset? tapPosition;
+                        return GestureDetector(
+                          onTapDown: (details) {
+                            tapPosition = details.globalPosition;
+                          },
+                          child: InkWell(
+                            onTap: () {
+                              if (Get.isRegistered<ThemeController>()) {
+                                Get.find<ThemeController>().changeThemeWithAnimation(
+                                  ThemeMode.light,
+                                  tapPosition,
+                                );
+                              } else {
+                                controller.setThemeMode(SettingConstants.themeModes[0]);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    SettingConstants.themeModes[0],
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ).khmer,
                                   ),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: isSelected ? _primary : radioBorderColor,
-                                      width: isSelected ? 6 : 1.5,
+                                  const Spacer(),
+                                  Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: isSelected ? _primary : radioBorderColor,
+                                        width: isSelected ? 6 : 1.5,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -136,33 +149,48 @@ class ThemePage extends StatelessWidget {
                       // Night Mode Row
                       Obx(() {
                         final isSelected = controller.themeModeName.value == SettingConstants.themeModes[1];
-                        return InkWell(
-                          onTap: () => controller.setThemeMode(SettingConstants.themeModes[1]),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-                            child: Row(
-                              children: [
-                                Text(
-                                  SettingConstants.themeModes[1],
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                        Offset? tapPosition;
+                        return GestureDetector(
+                          onTapDown: (details) {
+                            tapPosition = details.globalPosition;
+                          },
+                          child: InkWell(
+                            onTap: () {
+                              if (Get.isRegistered<ThemeController>()) {
+                                Get.find<ThemeController>().changeThemeWithAnimation(
+                                  ThemeMode.dark,
+                                  tapPosition,
+                                );
+                              } else {
+                                controller.setThemeMode(SettingConstants.themeModes[1]);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    SettingConstants.themeModes[1],
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ).khmer,
                                   ),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: isSelected ? _primary : radioBorderColor,
-                                      width: isSelected ? 6 : 1.5,
+                                  const Spacer(),
+                                  Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: isSelected ? _primary : radioBorderColor,
+                                        width: isSelected ? 6 : 1.5,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         );

@@ -25,8 +25,7 @@ class NotificationsPage extends GetView<NotificationsController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Notifications',
+        title: Text('Notifications'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -41,46 +40,46 @@ class NotificationsPage extends GetView<NotificationsController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ── MESSAGES SECTION ───────────────────────────────────────────
-              _buildSectionHeader('MESSAGES'),
+              _buildSectionHeader('MESSAGES'.tr),
               _buildCardContainer([
                 Obx(() => _buildSwitchTile(
-                      title: 'Message Notifications',
-                      subtitle: 'Receive alerts for new private messages',
+                      title: 'Message Notifications'.tr.tr.tr,
+                      subtitle: 'Receive alerts for new private messages'.tr.tr.tr,
                       value: controller.messageNotifications.value,
                       onChanged: controller.toggleMessageNotifications,
                     )),
                 _buildDivider(),
                 Obx(() => _buildSwitchTile(
-                      title: 'Groups Notifications',
-                      subtitle: 'Alerts for group activity',
+                      title: 'Groups Notifications'.tr.tr.tr,
+                      subtitle: 'Alerts for group activity'.tr.tr.tr,
                       value: controller.groupsNotifications.value,
                       onChanged: controller.toggleGroupsNotifications,
                     )),
                 _buildDivider(),
                 Obx(() => _buildSwitchTile(
-                      title: 'Show Previews',
-                      subtitle: 'Display message text in notifications',
+                      title: 'Show Previews'.tr.tr.tr,
+                      subtitle: 'Display message text in notifications'.tr.tr.tr,
                       value: controller.showPreviews.value,
                       onChanged: controller.toggleShowPreviews,
                     )),
                 _buildDivider(),
                 Obx(() => _buildSwitchTile(
-                      title: 'In-App Sounds',
-                      subtitle: 'Play sound when the app is open',
+                      title: 'In-App Sounds'.tr.tr.tr,
+                      subtitle: 'Play sound when the app is open'.tr.tr.tr,
                       value: controller.inAppSounds.value,
                       onChanged: controller.toggleInAppSounds,
                     )),
                 _buildDivider(),
                 Obx(() => _buildSwitchTile(
-                      title: 'In-Chat Sounds',
-                      subtitle: 'Play sounds for incoming and outgoing messages while in a chat',
+                      title: 'In-Chat Sounds'.tr.tr.tr,
+                      subtitle: 'Play sounds for incoming and outgoing messages while in a chat'.tr.tr.tr,
                       value: controller.inChatSounds.value,
                       onChanged: controller.toggleInChatSounds,
                     )),
                 _buildDivider(),
                 Obx(() => _buildSwitchTile(
-                      title: 'In-App Vibrate',
-                      subtitle: 'Vibrate for messages',
+                      title: 'In-App Vibrate'.tr.tr.tr,
+                      subtitle: 'Vibrate for messages'.tr.tr.tr,
                       value: controller.inAppVibrate.value,
                       onChanged: controller.toggleInAppVibrate,
                     )),
@@ -89,17 +88,17 @@ class NotificationsPage extends GetView<NotificationsController> {
               const SizedBox(height: 24),
 
               // ── CALLS SECTION ──────────────────────────────────────────────
-              _buildSectionHeader('CALLS'),
+              _buildSectionHeader('CALLS'.tr),
               _buildCardContainer([
                 Obx(() => _buildNavTile(
-                      title: 'Ringtone',
-                      subtitle: controller.selectedRingtone.value,
+                      title: 'Ringtone'.tr.tr.tr,
+                      subtitle: controller.selectedRingtone.value.tr,
                       onTap: () => Get.toNamed(AppRoutes.ringtone),
                     )),
                 _buildDivider(),
                 Obx(() => _buildSwitchTile(
-                      title: 'Vibrate when ringing',
-                      subtitle: 'Enable haptic alerts for incoming calls',
+                      title: 'Vibrate when ringing'.tr.tr.tr,
+                      subtitle: 'Enable haptic alerts for incoming calls'.tr.tr,
                       value: controller.vibrateWhenRinging.value,
                       onChanged: controller.toggleVibrateWhenRinging,
                     )),

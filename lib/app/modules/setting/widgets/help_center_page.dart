@@ -25,12 +25,12 @@ class HelpCenterPage extends GetView<HelpCenterController> {
         ),
         titleSpacing: 0,
         title: Text(
-          'Help Center',
+          'Help Center'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
             fontWeight: FontWeight.w600,
-          ),
+          ).khmer,
         ),
       ),
       body: SafeArea(
@@ -44,25 +44,25 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                 child: Column(
                   children: [
                     Text(
-                      'How can we help you?',
+                      'Question'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isDarkMode ? Colors.white : const Color(0xFF0F172A),
                         fontSize: 26,
                         fontWeight: FontWeight.w800,
-                      ),
+                      ).khmer,
                     ),
                     const SizedBox(height: 10),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'Find answers to common questions about account security, chat features, and more.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color(0xFF64748B),
+                          color: isDarkMode ? const Color(0xFFE2E8F0) : const Color(0xFF64748B),
                           fontSize: 13,
                           height: 1.4,
-                        ),
+                        ).khmer,
                       ),
                     ),
                   ],
@@ -74,7 +74,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
               // ── CATEGORIES ─────────────────────────────────────────────────
               _buildCategoryCard(
                 icon: Icons.shield_outlined,
-                title: 'Privacy & Security',
+                title: 'Privacy Policy'.tr,
                 subtitle: 'Learn how to keeps your private conversations secure with end-to-end encryption.',
                 actionText: 'Explore security guides',
                 onActionTap: () {},
@@ -85,7 +85,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
 
               _buildCategoryCard(
                 icon: Icons.person_outline_rounded,
-                title: 'Account & Profile',
+                title: 'Account Profile'.tr,
                 subtitle: 'Manage settings, nicknames, and data.',
                 isDarkMode: isDarkMode,
               ),
@@ -94,7 +94,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
 
               _buildCategoryCard(
                 icon: Icons.chat_bubble_outline_rounded,
-                title: 'Chats & Media',
+                title: 'Chat Media'.tr,
                 subtitle: 'Sending files, voice notes, and groups.',
                 isDarkMode: isDarkMode,
               ),
@@ -111,16 +111,16 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Popular Articles',
+                    'Popular Articles'.tr,
                     style: TextStyle(
                       color: AppColors.text,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                    ),
+                    ).khmer,
                   ),
                   InkWell(
                     onTap: () {},
-                    child: const Row(
+                    child: Row(
                       children: [
                         Text(
                           'View all',
@@ -128,10 +128,10 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                             color: Color(0xFF0284C7),
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                          ),
+                          ).khmer,
                         ),
-                        SizedBox(width: 4),
-                        Icon(
+                        const SizedBox(width: 4),
+                        const Icon(
                           Icons.open_in_new_rounded,
                           color: Color(0xFF0284C7),
                           size: 13,
@@ -147,17 +147,17 @@ class HelpCenterPage extends GetView<HelpCenterController> {
               // ── POPULAR ARTICLES CARD LIST ─────────────────────────────────
               _buildCardContainer([
                 _buildArticleTile(
-                  title: 'How do I enable two-step verification?',
+                  title: 'popular article1'.tr,
                   onTap: () {},
                 ),
                 _buildDivider(),
                 _buildArticleTile(
-                  title: 'Backup and restore your chat history',
+                  title: 'popular article2'.tr,
                   onTap: () {},
                 ),
                 _buildDivider(),
                 _buildArticleTile(
-                  title: 'Changing your phone number',
+                  title: 'popular article3'.tr,
                   onTap: () {},
                 ),
               ]),
@@ -215,16 +215,16 @@ class HelpCenterPage extends GetView<HelpCenterController> {
               color: AppColors.text,
               fontSize: 16,
               fontWeight: FontWeight.bold,
-            ),
+            ).khmer,
           ),
           const SizedBox(height: 6),
           Text(
             subtitle,
-            style: const TextStyle(
-              color: Color(0xFF64748B),
+            style: TextStyle(
+              color: isDarkMode ? const Color(0xFFE2E8F0) : const Color(0xFF64748B),
               fontSize: 13,
               height: 1.4,
-            ),
+            ).khmer,
           ),
           if (actionText != null) ...[
             const SizedBox(height: 16),
@@ -239,7 +239,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                       color: Color(0xFF0284C7),
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                    ),
+                    ).khmer,
                   ),
                   const SizedBox(width: 4),
                   const Icon(
@@ -298,16 +298,16 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                     color: AppColors.text,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                  ),
+                  ).khmer,
                 ),
                 const SizedBox(height: 3),
-                const Text(
+                Text(
                   'Connection issues, notification delays, and app updates.',
                   style: TextStyle(
-                    color: Color(0xFF64748B),
+                    color: isDarkMode ? const Color(0xFFE2E8F0) : const Color(0xFF64748B),
                     fontSize: 12,
                     height: 1.3,
-                  ),
+                  ).khmer,
                 ),
               ],
             ),
@@ -379,7 +379,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                   color: AppColors.text,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                ),
+                ).khmer,
               ),
             ),
             const Icon(

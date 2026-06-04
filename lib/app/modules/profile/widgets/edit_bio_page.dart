@@ -57,8 +57,7 @@ class _EditBioPageState extends State<EditBioPage> {
           ),
         ),
         titleSpacing: 8,
-        title: Text(
-          'Bio',
+        title: Text('Bio'.tr,
           style: TextStyle(
             color: _primary,
             fontSize: 18,
@@ -98,8 +97,7 @@ class _EditBioPageState extends State<EditBioPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'BIO',
+                            Text('BIO'.tr,
                               style: TextStyle(
                                 color: Color(0xFF94A3B8),
                                 fontSize: 13,
@@ -133,8 +131,7 @@ class _EditBioPageState extends State<EditBioPage> {
                       const SizedBox(height: 14),
                       Padding(
                         padding: EdgeInsets.only(left: 4),
-                        child: Text(
-                          'Max length: 60 characters',
+                        child: Text('Max length: 60 characters'.tr,
                           style: TextStyle(
                             color: _subtitleColor,
                             fontSize: 11,

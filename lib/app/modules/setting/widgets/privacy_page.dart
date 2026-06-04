@@ -25,8 +25,7 @@ class PrivacyPage extends GetView<PrivacyController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Privacy',
+        title: Text('Privacy'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -41,46 +40,46 @@ class PrivacyPage extends GetView<PrivacyController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // WHO CAN SEE MY PERSONAL INFO
-              _buildSectionHeader('WHO CAN SEE MY PERSONAL INFO'),
+              _buildSectionHeader('WHO CAN SEE MY PERSONAL INFO'.tr),
               _buildCardContainer([
                 _buildOptionTile(
                   icon: Icons.history_rounded,
-                  title: 'Last Seen',
+                  title: 'Last Seen'.tr.tr.tr,
                   valueObs: controller.lastSeen,
                   onTap: () => Get.toNamed(AppRoutes.lastSeen),
                 ),
                 _buildDivider(),
                 _buildSwitchTile(
                   icon: Icons.incomplete_circle_rounded,
-                  title: 'Status',
+                  title: 'Status'.tr.tr.tr,
                   valueObs: controller.statusEnabled,
                   onChanged: controller.toggleStatus,
                 ),
                 _buildDivider(),
                 _buildOptionTile(
                   icon: Icons.account_circle_outlined,
-                  title: 'Profile Photos',
+                  title: 'Profile Photos'.tr.tr.tr,
                   valueObs: controller.profilePhotos,
                   onTap: () => Get.toNamed(AppRoutes.profilePhotos),
                 ),
                 _buildDivider(),
                 _buildOptionTile(
                   icon: Icons.smartphone_rounded,
-                  title: 'Phone Number',
+                  title: 'Phone Number'.tr.tr.tr,
                   valueObs: controller.phoneNumber,
                   onTap: () => Get.toNamed(AppRoutes.phoneNumberPrivacy),
                 ),
                 _buildDivider(),
                 _buildOptionTile(
                   icon: Icons.edit_note_rounded,
-                  title: 'BIO',
+                  title: 'BIO'.tr.tr.tr,
                   valueObs: controller.bioPrivacy,
                   onTap: () => Get.toNamed(AppRoutes.bioPrivacy),
                 ),
                 _buildDivider(),
                 _buildOptionTile(
                   icon: Icons.cake_outlined,
-                  title: 'Birthday',
+                  title: 'Birthday'.tr.tr.tr,
                   valueObs: controller.birthdayPrivacy,
                   onTap: () => Get.toNamed(AppRoutes.birthdayPrivacy),
                 ),
@@ -89,12 +88,12 @@ class PrivacyPage extends GetView<PrivacyController> {
               const SizedBox(height: 24),
 
               // MESSAGES & PRESENCE
-              _buildSectionHeader('MESSAGES & PRESENCE'),
+              _buildSectionHeader('MESSAGES & PRESENCE'.tr),
               _buildCardContainer([
                 _buildSwitchTile(
                   icon: Icons.timer_outlined,
-                  title: 'Disappearing Messages',
-                  subtitle: 'Start new chats with a timer',
+                  title: 'Disappearing Messages'.tr.tr.tr,
+                  subtitle: 'Start new chats with a timer'.tr.tr.tr,
                   valueObs: controller.disappearingMessagesEnabled,
                   onChanged: controller.toggleDisappearingMessages,
                   onTap: () => Get.toNamed(AppRoutes.disappearingMessages),
@@ -102,7 +101,7 @@ class PrivacyPage extends GetView<PrivacyController> {
                 _buildDivider(),
                 _buildOptionTile(
                   icon: Icons.people_outline_rounded,
-                  title: 'Invites',
+                  title: 'Invites'.tr.tr.tr,
                   valueObs: controller.invites,
                   onTap: () => Get.toNamed(AppRoutes.invitesPrivacy),
                 ),
@@ -189,7 +188,7 @@ class PrivacyPage extends GetView<PrivacyController> {
             ),
             const Spacer(),
             Obx(() => Text(
-                  valueObs.value,
+                  valueObs.value.tr,
                   style: const TextStyle(
                     color: Color(0xFF64748B),
                     fontSize: 14,

@@ -25,8 +25,7 @@ class PhoneNumberPrivacyPage extends GetView<PhoneNumberPrivacyController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Phone Number',
+        title: Text('Phone Number'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -65,8 +64,7 @@ class PhoneNumberPrivacyPage extends GetView<PhoneNumberPrivacyController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'PHONE NUMBER',
+                            Text('PHONE NUMBER'.tr,
                               style: TextStyle(
                                 color: isDarkMode ? const Color(0xFF64748B) : const Color(0xFF475569),
                                 fontSize: 12,
@@ -75,8 +73,7 @@ class PhoneNumberPrivacyPage extends GetView<PhoneNumberPrivacyController> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              'Who can see my phone number?',
+                            Text('Who can see my phone number?'.tr,
                               style: TextStyle(
                                 color: AppColors.subtitle,
                                 fontSize: 12,
@@ -125,8 +122,7 @@ class PhoneNumberPrivacyPage extends GetView<PhoneNumberPrivacyController> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           child: Row(
             children: [
-              Text(
-                option,
+              Text(option.tr,
                 style: TextStyle(
                   color: AppColors.text,
                   fontSize: 15,

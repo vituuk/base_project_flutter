@@ -225,8 +225,7 @@ class ProfilePage extends GetView<ProfileController> {
         automaticallyImplyLeading: false,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Profile',
+        title: Text('Profile'.tr,
           style: TextStyle(
             color: _primary,
             fontSize: 18,
@@ -253,8 +252,7 @@ class ProfilePage extends GetView<ProfileController> {
             size: 18,
           ),
         ),
-        title: const Text(
-          'Profile',
+        title: Text('Profile'.tr,
           style: TextStyle(
             color: _primary,
             fontSize: 18,

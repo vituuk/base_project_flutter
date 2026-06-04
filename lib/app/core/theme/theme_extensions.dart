@@ -11,7 +11,7 @@ extension AppThemeExtension on BuildContext {
   Color get appTextColor => isDarkMode ? Colors.white : const Color(0xFF111827);
   Color get appSubtitleColor => isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
   Color get appDividerColor => isDarkMode ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
-  Color get appPrimaryColor => isDarkMode ? Colors.white : const Color(0xFF2046E8);
+  Color get appPrimaryColor => const Color(0xFF2046E8);
   Color get appInputColor => isDarkMode ? const Color(0xFF1E293B) : Colors.white;
 }
 
@@ -30,6 +30,13 @@ class AppColors {
   static Color get text    => isDarkMode ? Colors.white : const Color(0xFF111827);
   static Color get subtitle => isDarkMode ? const Color(0xFFCBD5E1) : const Color(0xFF6B7280);
   static Color get divider => isDarkMode ? const Color(0x2664748B) : const Color(0xFFE2E8F0);
-  static Color get primary => isDarkMode ? Colors.white : const Color(0xFF2046E8);
+  static Color get primary => const Color(0xFF2046E8);
   static Color get input   => isDarkMode ? const Color(0xFF1E293B) : Colors.white;
+}
+
+extension TextStyleKhmer on TextStyle {
+  TextStyle get khmer => copyWith(
+        fontFamily: 'Noto Sans Khmer',
+        fontFamilyFallback: const ['Noto Sans Khmer'],
+      );
 }

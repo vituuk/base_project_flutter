@@ -24,8 +24,7 @@ class RingtonePage extends GetView<NotificationsController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Ringtone',
+        title: Text('Ringtone'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -39,7 +38,7 @@ class RingtonePage extends GetView<NotificationsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionHeader('RINGTONE'),
+              _buildSectionHeader('RINGTONE'.tr),
               _buildCardContainer([
                 ListView.separated(
                   shrinkWrap: true,
@@ -116,8 +115,7 @@ class RingtonePage extends GetView<NotificationsController> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           child: Row(
             children: [
-              Text(
-                ringtone,
+              Text(ringtone.tr,
                 style: TextStyle(
                   color: AppColors.text,
                   fontSize: 15,

@@ -126,7 +126,7 @@ class UserCallController extends GetxController {
       }
       
       if (isEmulator) {
-        cameraRotationTurns.value = isFrontCamera.value ? 2 : 0;
+        cameraRotationTurns.value = 0; // Default to 0 so the preview is upright by default
       } else {
         cameraRotationTurns.value = 0;
       }

@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: IntrinsicHeight(
                     child: Column(
                       children: [
-                        SizedBox(height: constraints.maxHeight * 0.08),
+                        const Spacer(),
 
                         // ── Top subtitle ──────────────────────────────────
                         Text(
@@ -240,8 +240,7 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {},
-                                child: const Text(
-                                  AuthConstants.loginHelpCenter,
+                                child: Text(AuthConstants.loginHelpCenter,
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -251,8 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               GestureDetector(
                                 onTap: () {},
-                                child: const Text(
-                                  AuthConstants.privacyPolicy,
+                                child: Text(AuthConstants.privacyPolicy,
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -334,13 +332,12 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
           const SizedBox(height: 16),
 
           // ── Title ──────────────────────────────────────────────────────
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Row(
               children: [
-                Text(
-                  'Select Country',
-                  style: TextStyle(
+                Text('Select Country'.tr,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: _darkText,
@@ -388,10 +385,9 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
           // ── Country list ───────────────────────────────────────────────
           Expanded(
             child: _filtered.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No countries found',
-                      style: TextStyle(color: _subtitle, fontSize: 14),
+                ? Center(
+                    child: Text('No countries found'.tr,
+                      style: const TextStyle(color: _subtitle, fontSize: 14),
                     ),
                   )
                 : ListView.separated(

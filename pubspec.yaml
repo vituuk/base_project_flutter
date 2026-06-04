@@ -78,6 +78,8 @@ flutter:
     - assets/icons/
     - assets/icons/menu-bar/
     - assets/icons/contact/
+    - assets/sounds/
+    - assets/i18n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -107,3 +109,7 @@ flutter:
           weight: 800
         - asset: assets/fonts/Nunito/Nunito-Italic.ttf
           style: italic
+    - family: Noto Sans Khmer
+      fonts:
+        - asset: assets/fonts/NotoSansKhmer-Variable.ttf
+

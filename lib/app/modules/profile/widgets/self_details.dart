@@ -35,7 +35,7 @@ class SelfDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'MOBILE',
+                        'MOBILE'.tr,
                         style: TextStyle(
                           color: const Color(0xFF94A3B8),
                           fontSize: 10,
@@ -75,7 +75,7 @@ class SelfDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'USERNAME',
+                        'USERNAME'.tr,
                         style: TextStyle(
                           color: const Color(0xFF94A3B8),
                           fontSize: 10,

@@ -12,23 +12,25 @@ class AppTheme {
   static const _fontFamily = 'Inter';
   static const fontFamilyInter = 'Inter';
   static const fontFamilyNunito = 'Nunito';
+  static const fontFamilyKhmer = 'Noto Sans Khmer';
+  static const fontFamilyFallbackKhmer = ['Noto Sans Khmer'];
 
   static TextTheme _textTheme(TextTheme base) => base.copyWith(
-        displayLarge: base.displayLarge?.copyWith(fontFamily: _fontFamily),
-        displayMedium: base.displayMedium?.copyWith(fontFamily: _fontFamily),
-        displaySmall: base.displaySmall?.copyWith(fontFamily: _fontFamily),
-        headlineLarge: base.headlineLarge?.copyWith(fontFamily: _fontFamily),
-        headlineMedium: base.headlineMedium?.copyWith(fontFamily: _fontFamily),
-        headlineSmall: base.headlineSmall?.copyWith(fontFamily: _fontFamily),
-        titleLarge: base.titleLarge?.copyWith(fontFamily: _fontFamily),
-        titleMedium: base.titleMedium?.copyWith(fontFamily: _fontFamily),
-        titleSmall: base.titleSmall?.copyWith(fontFamily: _fontFamily),
-        bodyLarge: base.bodyLarge?.copyWith(fontFamily: _fontFamily),
-        bodyMedium: base.bodyMedium?.copyWith(fontFamily: _fontFamily),
-        bodySmall: base.bodySmall?.copyWith(fontFamily: _fontFamily),
-        labelLarge: base.labelLarge?.copyWith(fontFamily: _fontFamily),
-        labelMedium: base.labelMedium?.copyWith(fontFamily: _fontFamily),
-        labelSmall: base.labelSmall?.copyWith(fontFamily: _fontFamily),
+        displayLarge: base.displayLarge?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        displayMedium: base.displayMedium?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        displaySmall: base.displaySmall?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        headlineLarge: base.headlineLarge?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        headlineMedium: base.headlineMedium?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        headlineSmall: base.headlineSmall?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        titleLarge: base.titleLarge?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        titleMedium: base.titleMedium?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        titleSmall: base.titleSmall?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        bodyLarge: base.bodyLarge?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        bodyMedium: base.bodyMedium?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        bodySmall: base.bodySmall?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        labelLarge: base.labelLarge?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        labelMedium: base.labelMedium?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
+        labelSmall: base.labelSmall?.copyWith(fontFamily: _fontFamily, fontFamilyFallback: fontFamilyFallbackKhmer),
       );
 
 

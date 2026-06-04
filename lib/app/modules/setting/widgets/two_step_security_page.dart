@@ -24,8 +24,7 @@ class TwoStepSecurityPage extends GetView<TwoStepSecurityController> {
           onPressed: () => Get.back(),
         ),
         titleSpacing: 0,
-        title: Text(
-          'Two-Step Verification',
+        title: Text('Two-Step Verification'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : AppColors.primary,
             fontSize: 17,
@@ -57,8 +56,7 @@ class TwoStepSecurityPage extends GetView<TwoStepSecurityController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'SET PASSWORD',
+                    Text('SET PASSWORD'.tr,
                       style: TextStyle(
                         color: isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF475569),
                         fontSize: 12,
@@ -69,8 +67,7 @@ class TwoStepSecurityPage extends GetView<TwoStepSecurityController> {
                     const SizedBox(height: 20),
 
                     // Enter password label
-                    Text(
-                      'Enter password',
+                    Text('Enter password'.tr,
                       style: TextStyle(
                         color: AppColors.primary,
                         fontSize: 12,
@@ -122,8 +119,7 @@ class TwoStepSecurityPage extends GetView<TwoStepSecurityController> {
                     const SizedBox(height: 16),
 
                     // Re-enter password label
-                    Text(
-                      'Re-enter password',
+                    Text('Re-enter password'.tr,
                       style: TextStyle(
                         color: AppColors.primary,
                         fontSize: 12,
@@ -174,8 +170,7 @@ class TwoStepSecurityPage extends GetView<TwoStepSecurityController> {
               // Description Text
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Text(
-                  'Add extra security. Enter a verification code when logging in on a new device.',
+                child: Text('Add extra security. Enter a verification code when logging in on a new device.'.tr,
                   style: TextStyle(
                     color: isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
                     fontSize: 12,

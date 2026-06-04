@@ -78,8 +78,7 @@ class _WelcomePageState extends State<WelcomePage>
                           opacity: _fadeIn,
                           child: SlideTransition(
                             position: _slideUp,
-                            child: const Text(
-                              AuthConstants.welcomeLoginLabel,
+                            child: Text(AuthConstants.welcomeLoginLabel,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -97,8 +96,7 @@ class _WelcomePageState extends State<WelcomePage>
                           opacity: _fadeIn,
                           child: SlideTransition(
                             position: _slideUp,
-                            child: const Text(
-                              AuthConstants.welcomeHeading,
+                            child: Text(AuthConstants.welcomeHeading,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 38,
@@ -140,8 +138,7 @@ class _WelcomePageState extends State<WelcomePage>
                         // ── Description ──────────────────────────────────────
                         FadeTransition(
                           opacity: _fadeIn,
-                          child: const Text(
-                            AuthConstants.welcomeDescription,
+                          child: Text(AuthConstants.welcomeDescription,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 18,
@@ -171,8 +168,7 @@ class _WelcomePageState extends State<WelcomePage>
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                               ),
-                              child: const Text(
-                                AuthConstants.continueLabel,
+                              child: Text(AuthConstants.continueLabel,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

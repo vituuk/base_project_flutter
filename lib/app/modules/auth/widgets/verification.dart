@@ -50,11 +50,20 @@ class _VerificationPageState extends State<VerificationPage> {
         ),
         centerTitle: false,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        child: Column(
-          children: [
-            // ── White Card ───────────────────────────────────────────────
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight - 24,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    
+                    // ── White Card ───────────────────────────────────────────────
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -106,8 +115,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     final phone = controller.phoneNumber.isNotEmpty
                         ? controller.phoneNumber
                         : AuthConstants.fallbackPhoneNumber;
-                    return Text(
-                      'Enter the ${AuthConstants.otpLength}-digit code sent to $phone',
+                    return Text('Enter the ${AuthConstants.otpLength}-digit code sent to $phone'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
@@ -160,7 +168,7 @@ class _VerificationPageState extends State<VerificationPage> {
                               : controller.verify,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryBlue,
-                            foregroundColor: isDarkMode ? Colors.black : Colors.white,
+                            foregroundColor: Colors.white,
                             disabledBackgroundColor:
                                 primaryBlue.withValues(alpha: 0.6),
                             elevation: 0,
@@ -175,8 +183,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2.5,
                                     valueColor:
-                                        AlwaysStoppedAnimation<Color>(
-                                            isDarkMode ? Colors.black : Colors.white),
+                                        const AlwaysStoppedAnimation<Color>(Colors.white),
                                   ),
                                 )
                               : Row(
@@ -185,16 +192,16 @@ class _VerificationPageState extends State<VerificationPage> {
                                   children: [
                                     Text(
                                       AuthConstants.verificationButton,
-                                      style: TextStyle(
-                                        color: isDarkMode ? Colors.black : Colors.white,
+                                      style: const TextStyle(
+                                        color: Colors.white,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: 0.2,
                                       ),
                                     ),
                                     const SizedBox(width: 10),
-                                    Icon(Icons.arrow_forward_rounded,
-                                        size: 18, color: isDarkMode ? Colors.black : Colors.white),
+                                    const Icon(Icons.arrow_forward_rounded,
+                                        size: 18, color: Colors.white),
                                   ],
                                 ),
                         ),
@@ -223,7 +230,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: controller.canResend.value
-                                ? (isDarkMode ? Colors.white : primaryBlue)
+                                ? primaryBlue
                                 : Colors.grey.shade400,
                           ),
                         ),
@@ -253,7 +260,7 @@ class _VerificationPageState extends State<VerificationPage> {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: isDarkMode ? Colors.white : primaryBlue,
+                            color: primaryBlue,
                           ),
                         ),
                       ),
@@ -292,9 +299,13 @@ class _VerificationPageState extends State<VerificationPage> {
               ],
             ),
 
-            const SizedBox(height: 24),
-          ],
-        ),
+            const Spacer(),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

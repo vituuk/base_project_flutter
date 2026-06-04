@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 
@@ -9,6 +10,14 @@ class ListMenu extends GetView<ListMenuController> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final textStyle = TextStyle(
+      color: textColor,
+      fontFamily: AppTheme.fontFamilyNunito,
+      fontFamilyFallback: AppTheme.fontFamilyFallbackKhmer,
+    );
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -23,31 +32,36 @@ class ListMenu extends GetView<ListMenuController> {
                 onPressed: () => Get.toNamed(AppRoutes.home),
                 icon: const Icon(Icons.home),
               ),
-              const Text('Home'),
+              Text(
+                'Home',
+                style: textStyle,
+              ),
             ],
           ),
         ),
-        Container(
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () => Get.toNamed(AppRoutes.detail),
-                icon: const Icon(Icons.details),
-              ),
-              const Text('Detail'),
-            ],
-          ),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () => Get.toNamed(AppRoutes.detail),
+              icon: const Icon(Icons.details),
+            ),
+            Text(
+              'Detail',
+              style: textStyle,
+            ),
+          ],
         ),
-        Container(
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () => Get.toNamed(AppRoutes.user),
-                icon: const Icon(Icons.usb_rounded),
-              ),
-              const Text('User'),
-            ],
-          ),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () => Get.toNamed(AppRoutes.user),
+              icon: const Icon(Icons.usb_rounded),
+            ),
+            Text(
+              'User',
+              style: textStyle,
+            ),
+          ],
         ),
       ],
     );

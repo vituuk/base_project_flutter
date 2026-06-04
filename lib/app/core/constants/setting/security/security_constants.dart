@@ -1,36 +1,38 @@
+import 'package:get/get.dart';
+
 /// Static constants for all security-related setting screens.
 class SecurityConstants {
   const SecurityConstants._();
 
   // ── Page title ───────────────────────────────────────────────────────────────
 
-  static const String pageTitle = 'Security';
+  static String get pageTitle => 'Security'.tr;
 
   // ── Section labels ──────────────────────────────────────────────────────────
 
-  static const String sectionAccountProtection = 'ACCOUNT PROTECTION';
-  static const String sectionDevicesSessions   = 'DEVICES & SESSIONS';
+  static String get sectionAccountProtection => 'ACCOUNT PROTECTION'.tr;
+  static String get sectionDevicesSessions   => 'DEVICES & SESSIONS'.tr;
 
   // ── Item labels ─────────────────────────────────────────────────────────────
 
-  static const String itemTwoStepVerification   = 'Two-Step Verification';
-  static const String itemSecurityNotifications = 'Security Notifications';
-  static const String itemEmailAlerts           = 'Email Alerts';
-  static const String itemDevices               = 'Devices';
+  static String get itemTwoStepVerification   => 'Two-Step Verification'.tr;
+  static String get itemSecurityNotifications => 'Security Notifications'.tr;
+  static String get itemEmailAlerts           => 'Email Alerts'.tr;
+  static String get itemDevices               => 'Devices'.tr;
 
   // ── Snackbar / dialog strings ────────────────────────────────────────────────
 
-  static const String snackTwoStepTitle   = 'Two-Step Verification';
-  static const String snackDevicesTitle   = 'Devices & Sessions';
-  static const String snackComingSoon     = 'Coming soon';
+  static String get snackTwoStepTitle   => 'Two-Step Verification'.tr;
+  static String get snackDevicesTitle   => 'Devices & Sessions'.tr;
+  static String get snackComingSoon     => 'Coming soon'.tr;
 
   // ── Default values ──────────────────────────────────────────────────────────
 
   /// Subtitle shown under Two-Step Verification when disabled.
-  static const String twoStepOff = 'Off';
+  static String get twoStepOff => 'Off'.tr;
 
   /// Subtitle shown under Two-Step Verification when enabled.
-  static const String twoStepOn  = 'On';
+  static String get twoStepOn  => 'On'.tr;
 
   /// Default state for Security Notifications toggle.
   static const bool defaultSecurityNotifications = true;

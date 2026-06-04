@@ -42,7 +42,7 @@ class _SettingPageState extends State<SettingPage> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Settings',
+          'Settings'.tr,
           style: TextStyle(
             color: isDarkMode ? Colors.white : _primary,
             fontSize: 18,
@@ -101,9 +101,8 @@ class _SettingPageState extends State<SettingPage> {
                       size: 20,
                     ),
                     const SizedBox(width: 12),
-                    const Text(
-                      'Logout',
-                      style: TextStyle(
+                    Text('Logout'.tr,
+                      style: const TextStyle(
                         color: Color(0xFFEF4444),
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
@@ -127,11 +126,11 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(height: 24),
 
               // ── 2. Account Section Card ──
-              _buildSectionHeader(SettingConstants.sectionAccount),
+              _buildSectionHeader(SettingConstants.sectionAccount.tr),
               _buildCardContainer(cardColor, [
                 _buildListTile(
                   icon: Icons.lock_outline_rounded,
-                  title: SettingConstants.itemPrivacy,
+                  title: SettingConstants.itemPrivacy.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
                   onTap: () => Get.toNamed(AppRoutes.privacy),
@@ -139,7 +138,7 @@ class _SettingPageState extends State<SettingPage> {
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(
                   icon: Icons.security_rounded,
-                  title: SettingConstants.itemSecurity,
+                  title: SettingConstants.itemSecurity.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
                   onTap: () => Get.toNamed(AppRoutes.security),
@@ -147,7 +146,7 @@ class _SettingPageState extends State<SettingPage> {
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(
                   icon: Icons.smartphone_rounded,
-                  title: SettingConstants.itemChangeNumber,
+                  title: SettingConstants.itemChangeNumber.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
                   onTap: () => Get.toNamed(AppRoutes.changeNumber),
@@ -156,71 +155,78 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(height: 20),
 
               // ── 3. Chats Section Card ──
-              _buildSectionHeader(SettingConstants.sectionChats),
+              _buildSectionHeader(SettingConstants.sectionChats.tr),
               _buildCardContainer(cardColor, [
                 Obx(() => _buildListTile(
                       icon: Icons.palette_outlined,
-                      title: SettingConstants.itemTheme,
+                      title: SettingConstants.itemTheme.tr,
                       subtitle: controller.themeModeName.value,
                       textColor: textColor,
                       subtitleColor: subtitleColor,
                       iconColor: listIconColor,
                       onTap: () => Get.toNamed(AppRoutes.theme),
                     )),
+                Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
+                Obx(() => _buildListTile(
+                      icon: Icons.translate_rounded,
+                      title: 'Language'.tr.tr.tr,
+                      subtitle: controller.currentLanguage.value,
+                      textColor: textColor,
+                      subtitleColor: subtitleColor,
+                      iconColor: listIconColor,
+                      onTap: () => controller.showLanguageDialog(context),
+                    )),
               ]),
               const SizedBox(height: 20),
 
-              // ── 4. Notifications Section Card ──
-              _buildSectionHeader(SettingConstants.sectionNotifications),
-              _buildCardContainer(cardColor, [
-                _buildListTile(
-                  icon: Icons.notifications_none_rounded,
-                  title: SettingConstants.itemNotifications,
-                  textColor: textColor,
-                  iconColor: listIconColor,
-                  onTap: () {},
-                ),
-              ]),
-              const SizedBox(height: 20),
-
-              // ── 5. Storage Section Card ──
-              _buildSectionHeader(SettingConstants.sectionStorage),
+              // ── 4. Storage Section Card ──
+              _buildSectionHeader(SettingConstants.sectionStorage.tr),
               _buildCardContainer(cardColor, [
                 _buildListTile(
                   icon: Icons.data_usage_rounded,
-                  title: SettingConstants.itemStorage,
+                  title: SettingConstants.itemStorage.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.storage),
                 ),
               ]),
               const SizedBox(height: 20),
 
-              // ── 6. Information Section Card ──
-              _buildSectionHeader(SettingConstants.sectionInformation),
+              // ── 5. Information Section Card ──
+              _buildSectionHeader(SettingConstants.sectionInformation.tr),
               _buildCardContainer(cardColor, [
                 _buildListTile(
                   icon: Icons.help_outline_rounded,
-                  title: SettingConstants.itemHelpCenter,
+                  title: SettingConstants.itemHelpCenter.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.helpCenter),
                 ),
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(
                   icon: Icons.mail_outline_rounded,
-                  title: SettingConstants.itemContactUs,
+                  title: SettingConstants.itemContactUs.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.contactUs),
                 ),
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(
                   icon: Icons.description_outlined,
-                  title: SettingConstants.itemPrivacyPolicy,
+                  title: SettingConstants.itemPrivacyPolicy.tr,
                   textColor: textColor,
                   iconColor: listIconColor,
                   onTap: () => Get.toNamed(AppRoutes.privacyPolicy),
+                ),
+                Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
+                _buildListTile(
+                  icon: Icons.volume_up_outlined,
+                  title: SettingConstants.itemNotifications.tr,
+                  subtitle: SettingConstants.itemNotificationsSubtitle.tr,
+                  textColor: textColor,
+                  subtitleColor: subtitleColor,
+                  iconColor: listIconColor,
+                  onTap: () => Get.toNamed(AppRoutes.notifications),
                 ),
               ]),
               const SizedBox(height: 20),
@@ -229,7 +235,7 @@ class _SettingPageState extends State<SettingPage> {
               _buildCardContainer(cardColor, [
                 _buildListTile(
                   icon: Icons.person_add_alt_1_outlined,
-                  title: SettingConstants.itemAddAccount,
+                  title: SettingConstants.itemAddAccount.tr,
                   textColor: _primary,
                   iconColor: _primary,
                   onTap: () => Get.toNamed(AppRoutes.addAccount),
@@ -237,7 +243,7 @@ class _SettingPageState extends State<SettingPage> {
                 Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 56, endIndent: 16),
                 _buildListTile(
                   icon: Icons.logout_rounded,
-                  title: SettingConstants.itemLogout,
+                  title: SettingConstants.itemLogout.tr,
                   textColor: const Color(0xFFEF4444),
                   iconColor: const Color(0xFFEF4444),
                   onTap: () => _showLogoutDialog(context, isDarkMode, textColor, subtitleColor),
@@ -326,8 +332,7 @@ class _SettingPageState extends State<SettingPage> {
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
-          child: const Text(
-            SettingConstants.itemEditProfile,
+          child: Text(SettingConstants.itemEditProfile,
             style: TextStyle(
               color: _primary,
               fontSize: 14,
@@ -400,12 +405,13 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   Widget _buildListTile({
-    required IconData icon,
+    IconData? icon,
+    Widget? leading,
     required String title,
     String? subtitle,
     required Color textColor,
     Color? subtitleColor,
-    required Color iconColor,
+    Color? iconColor,
     required VoidCallback onTap,
   }) {
     return InkWell(
@@ -415,11 +421,14 @@ class _SettingPageState extends State<SettingPage> {
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: iconColor,
-              size: 22,
-            ),
+            if (leading != null)
+              leading
+            else if (icon != null)
+              Icon(
+                icon,
+                color: iconColor ?? const Color(0xFF1E293B),
+                size: 22,
+              ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -483,15 +492,14 @@ class _SettingPageState extends State<SettingPage> {
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: const Text(SettingConstants.logoutDialogCancel, style: TextStyle(color: Colors.grey)),
+              child: Text(SettingConstants.logoutDialogCancel, style: TextStyle(color: Colors.grey)),
             ),
             TextButton(
               onPressed: () {
                 Get.back();
                 Get.offAllNamed(AppRoutes.login);
               },
-              child: const Text(
-                SettingConstants.logoutDialogConfirm,
+              child: Text(SettingConstants.logoutDialogConfirm,
                 style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
@@ -590,7 +598,7 @@ class _BottomNavItem extends StatelessWidget {
             ),
             const SizedBox(height: 3),
             Text(
-              label,
+              label.tr,
               style: TextStyle(
                 fontSize: 11,
                 color: color,

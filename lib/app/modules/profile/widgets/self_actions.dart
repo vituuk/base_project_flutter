@@ -16,7 +16,7 @@ class SelfActions extends StatelessWidget {
         Expanded(
           child: _buildActionButton(
             icon: Icons.camera_alt_outlined,
-            label: 'Set Photo',
+            label: 'Set Photo'.tr,
             onTap: () => Get.toNamed(AppRoutes.setPhoto),
           ),
         ),
@@ -24,7 +24,7 @@ class SelfActions extends StatelessWidget {
         Expanded(
           child: _buildActionButton(
             icon: Icons.edit_outlined,
-            label: 'Edit Info',
+            label: 'Edit Info'.tr,
             onTap: () => Get.toNamed(AppRoutes.editInfo),
           ),
         ),

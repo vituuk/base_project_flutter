@@ -8,23 +8,37 @@ class ThemeController extends GetxController {
 
   ThemeMode get themeMode => _themeMode.value;
 
-  void setDark() {
-    _themeMode.value = ThemeMode.dark;
+  // Callback to handle animated transition at the root wrapper
+  Future<void> Function(Offset tapPosition, ThemeMode newMode)? onThemeChangeTransition;
+
+  Future<void> changeThemeWithAnimation(ThemeMode newMode, Offset? tapPosition) async {
+    if (_themeMode.value == newMode) return;
+
+    if (onThemeChangeTransition != null) {
+      await onThemeChangeTransition!(tapPosition ?? Offset.zero, newMode);
+    } else {
+      _themeMode.value = newMode;
+      Get.changeThemeMode(newMode);
+      update();
+    }
+  }
+
+  void setThemeModeDirectly(ThemeMode newMode) {
+    _themeMode.value = newMode;
     update();
+  }
+
+  void setDark() {
+    changeThemeWithAnimation(ThemeMode.dark, Offset.zero);
   }
 
   void setLight() {
-    _themeMode.value = ThemeMode.light;
-    update();
+    changeThemeWithAnimation(ThemeMode.light, Offset.zero);
   }
 
   void setByName(String name) {
-    if (name == 'Night Mode') {
-      _themeMode.value = ThemeMode.dark;
-    } else {
-      _themeMode.value = ThemeMode.light;
-    }
-    update();
+    final mode = name == 'Night Mode' ? ThemeMode.dark : ThemeMode.light;
+    changeThemeWithAnimation(mode, Offset.zero);
   }
 }
 
