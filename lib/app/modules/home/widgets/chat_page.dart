@@ -251,7 +251,11 @@ class ChatPage extends GetView<ChatController> {
             }
             break;
           case 'settings':
-            Get.offAllNamed(AppRoutes.setting);
+            if (Get.isRegistered<ShellController>()) {
+              Get.find<ShellController>().changePage(2);
+            } else {
+              Get.toNamed(AppRoutes.setting);
+            }
             break;
         }
       },
