@@ -56,7 +56,7 @@ class ChatPage extends GetView<ChatController> {
             ),
             child: ClipOval(
               child: Image.network(
-                'https://randomuser.me/api/portraits/men/46.jpg',
+                'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => CircleAvatar(
                   backgroundColor: const Color(0xFFDDE6F9),

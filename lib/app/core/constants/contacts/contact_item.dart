@@ -30,13 +30,13 @@ const List<ContactItem> kContactItems = [
   ContactItem(
     name: 'Alex Rivera',
     status: 'Active now',
-    avatarUrl: 'https://randomuser.me/api/portraits/men/32.jpg',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
     isOnline: true,
   ),
   ContactItem(
     name: 'Alice Johnson',
     status: 'Last seen within a week',
-    avatarUrl: 'https://randomuser.me/api/portraits/women/44.jpg',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
     isOnline: false,
   ),
   ContactItem(
@@ -48,25 +48,25 @@ const List<ContactItem> kContactItems = [
   ContactItem(
     name: 'Chris Miller',
     status: 'Last seen 2h ago',
-    avatarUrl: 'https://randomuser.me/api/portraits/men/75.jpg',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
     isOnline: false,
   ),
   ContactItem(
     name: 'Diana Prince',
     status: 'Active now',
-    avatarUrl: 'https://randomuser.me/api/portraits/women/68.jpg',
+    avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
     isOnline: true,
   ),
   ContactItem(
     name: 'Edward Chen',
     status: 'Last seen yesterday',
-    avatarUrl: 'https://randomuser.me/api/portraits/men/46.jpg',
+    avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
     isOnline: false,
   ),
   ContactItem(
     name: 'Fiona Green',
     status: 'Active now',
-    avatarUrl: 'https://randomuser.me/api/portraits/women/85.jpg',
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
     isOnline: true,
   ),
 ];
